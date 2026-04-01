@@ -3,19 +3,20 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Was bleibt.</title>
+  <title>What Remains</title>
   <style>
     :root {
-      --bg: #070b12;
-      --bg-soft: #0d1320;
-      --text: #f1eee8;
-      --muted: #cfc7b8;
-      --line: rgba(255,255,255,0.14);
-      --gold: #b99158;
-      --gold-hover: #c7a16a;
-      --overlay: rgba(5, 10, 18, 0.52);
+      --bg: #050913;
+      --bg-2: #08111f;
+      --text: #f0ede6;
+      --muted: rgba(240, 237, 230, 0.78);
+      --muted-2: rgba(240, 237, 230, 0.62);
+      --line: rgba(255,255,255,0.10);
+      --card: rgba(7, 14, 25, 0.62);
+      --gold: #c69a5a;
+      --gold-text: #fff9ef;
       --shadow: rgba(0,0,0,0.34);
-      --card: rgba(10, 16, 26, 0.62);
+      --max: 1180px;
     }
 
     * { box-sizing: border-box; }
@@ -31,23 +32,43 @@
 
     body {
       min-height: 100vh;
-      line-height: 1.5;
+      line-height: 1.45;
       letter-spacing: 0.01em;
+      background:
+        radial-gradient(circle at 24% 18%, rgba(99,132,182,0.15), transparent 20%),
+        radial-gradient(circle at 20% 34%, rgba(87,121,167,0.08), transparent 28%),
+        linear-gradient(180deg, #050913 0%, #03070e 100%);
     }
 
+    img { max-width: 100%; display: block; }
     a { color: inherit; text-decoration: none; }
+
+    .page-shell {
+      position: relative;
+      overflow: hidden;
+    }
+
+    .mist {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+      background:
+        radial-gradient(circle at 20% 14%, rgba(160, 190, 233, 0.12), transparent 16%),
+        radial-gradient(circle at 18% 28%, rgba(170, 198, 236, 0.10), transparent 21%),
+        radial-gradient(circle at 28% 58%, rgba(190, 210, 235, 0.05), transparent 28%),
+        linear-gradient(90deg, rgba(11,18,31,0.28) 0%, rgba(11,18,31,0.06) 26%, rgba(7,11,19,0.18) 100%);
+      opacity: 0.9;
+    }
 
     .hero {
       position: relative;
       min-height: 100vh;
-      display: flex;
-      align-items: center;
+      z-index: 1;
       overflow: hidden;
       background:
-        linear-gradient(90deg, rgba(4,8,14,0.80) 0%, rgba(5,10,18,0.58) 40%, rgba(5,10,18,0.72) 100%),
-        radial-gradient(circle at 28% 18%, rgba(107, 144, 194, 0.22), transparent 28%),
-        radial-gradient(circle at 33% 30%, rgba(125, 152, 192, 0.12), transparent 30%),
-        linear-gradient(180deg, #0b1321 0%, #060a10 100%);
+        linear-gradient(90deg, rgba(3,7,13,0.88) 0%, rgba(5,10,18,0.52) 36%, rgba(5,10,18,0.80) 100%),
+        linear-gradient(180deg, rgba(5,9,19,0.36) 0%, rgba(5,9,19,0.68) 100%);
     }
 
     .hero::before {
@@ -55,13 +76,13 @@
       position: absolute;
       inset: 0;
       background-image:
-        linear-gradient(90deg, rgba(4,8,14,0.62) 0%, rgba(4,8,14,0.18) 34%, rgba(4,8,14,0.28) 100%),
+        linear-gradient(90deg, rgba(6,10,18,0.50) 0%, rgba(6,10,18,0.12) 38%, rgba(6,10,18,0.42) 100%),
         url('a_digital_photograph_depicts_a_dimly_lit_room_with.png');
       background-size: cover;
       background-position: left center;
-      transform: scale(1.06);
-      filter: saturate(0.72) brightness(0.66) contrast(1.03) blur(0.35px);
-      opacity: 0.9;
+      transform: scale(1.08);
+      filter: brightness(0.68) saturate(0.74) contrast(1.04) blur(0.2px);
+      opacity: 0.95;
     }
 
     .hero::after {
@@ -69,13 +90,10 @@
       position: absolute;
       inset: 0;
       background:
-        radial-gradient(circle at 18% 14%, rgba(167, 193, 224, 0.24), transparent 16%),
-        radial-gradient(circle at 23% 24%, rgba(150, 177, 213, 0.14), transparent 28%),
-        radial-gradient(circle at 27% 58%, rgba(201, 218, 239, 0.08), transparent 34%),
-        linear-gradient(90deg, rgba(8,12,20,0.18) 0%, rgba(8,12,20,0.05) 38%, rgba(5,8,14,0.28) 100%),
-        linear-gradient(180deg, rgba(8,12,20,0.22) 0%, rgba(5,8,14,0.40) 100%);
+        radial-gradient(circle at 18% 16%, rgba(163,194,231,0.22), transparent 14%),
+        radial-gradient(circle at 24% 24%, rgba(157,182,214,0.10), transparent 22%),
+        linear-gradient(180deg, rgba(4,8,15,0.10) 0%, rgba(4,8,15,0.36) 100%);
       mix-blend-mode: screen;
-      opacity: 0.78;
       pointer-events: none;
     }
 
@@ -85,77 +103,73 @@
       left: 0;
       width: 100%;
       z-index: 3;
+      padding: 28px 36px;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 26px 42px;
     }
 
     .brand {
-      font-size: 0.95rem;
-      color: rgba(241, 238, 232, 0.86);
+      font-size: 0.98rem;
       letter-spacing: 0.12em;
       text-transform: uppercase;
+      color: rgba(240,237,230,0.90);
     }
 
     .lang {
       display: flex;
-      gap: 12px;
+      gap: 14px;
       flex-wrap: wrap;
-      font-size: 0.78rem;
-      color: rgba(241, 238, 232, 0.78);
+      font-size: 0.8rem;
       letter-spacing: 0.08em;
       text-transform: uppercase;
+      color: rgba(240,237,230,0.74);
     }
 
-    .lang a {
-      opacity: 0.72;
-      transition: opacity 0.2s ease;
-    }
-
-    .lang a.active,
-    .lang a:hover { opacity: 1; }
+    .lang a:hover,
+    .lang a.active { color: rgba(240,237,230,1); }
 
     .hero-inner {
       position: relative;
       z-index: 2;
-      width: min(1200px, 100%);
+      width: min(var(--max), calc(100% - 72px));
       margin: 0 auto;
-      padding: 120px 42px 70px;
+      min-height: 100vh;
       display: grid;
-      grid-template-columns: 1fr 1.15fr;
-      gap: 32px;
+      grid-template-columns: 1.15fr 1fr;
       align-items: center;
+      gap: 32px;
+      padding: 108px 0 70px;
     }
 
-    .spacer { min-height: 220px; }
+    .visual-space {
+      min-height: 540px;
+    }
 
     .copy {
+      max-width: 540px;
       justify-self: end;
-      max-width: 560px;
-      padding: 34px 10px 34px 34px;
+      padding-right: 18px;
     }
 
     h1 {
-      margin: 0 0 16px;
-      font-size: clamp(3rem, 7vw, 5.8rem);
-      font-weight: 400;
+      margin: 0 0 18px;
+      font-size: clamp(3rem, 7vw, 5.85rem);
       line-height: 0.95;
+      font-weight: 400;
       letter-spacing: -0.03em;
-      text-wrap: balance;
     }
 
     .subline {
-      font-size: clamp(1.15rem, 2vw, 1.65rem);
-      color: var(--text);
-      margin-bottom: 10px;
+      font-size: clamp(1.25rem, 2vw, 1.8rem);
+      margin-bottom: 14px;
     }
 
     .tagline {
-      font-size: clamp(1rem, 1.4vw, 1.2rem);
-      color: rgba(241, 238, 232, 0.76);
-      max-width: 30rem;
-      margin-bottom: 32px;
+      font-size: clamp(1.05rem, 1.5vw, 1.22rem);
+      color: var(--muted);
+      max-width: 33rem;
+      margin-bottom: 28px;
     }
 
     .actions {
@@ -166,88 +180,97 @@
     }
 
     .btn {
+      min-height: 50px;
+      padding: 0 22px;
+      border-radius: 12px;
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      min-height: 48px;
-      padding: 0 22px;
-      border-radius: 12px;
       border: 1px solid transparent;
       font-size: 0.98rem;
-      transition: all 0.2s ease;
-      box-shadow: 0 14px 32px rgba(0,0,0,0.20);
+      transition: 0.2s ease;
+      box-shadow: 0 14px 32px rgba(0,0,0,0.18);
     }
 
     .btn-primary {
       background: var(--gold);
-      color: #fff9ef;
+      color: var(--gold-text);
     }
 
-    .btn-primary:hover { background: var(--gold-hover); }
+    .btn-primary:hover { filter: brightness(1.06); }
 
     .btn-secondary {
-      background: rgba(10, 16, 26, 0.32);
+      background: rgba(8, 15, 28, 0.32);
+      border-color: rgba(255,255,255,0.14);
       color: var(--text);
-      border-color: rgba(255,255,255,0.16);
       backdrop-filter: blur(4px);
     }
 
     .btn-secondary:hover {
-      background: rgba(18, 27, 40, 0.42);
-      border-color: rgba(255,255,255,0.24);
+      background: rgba(11, 18, 31, 0.48);
+      border-color: rgba(255,255,255,0.22);
     }
 
-    .note {
-      font-size: 0.95rem;
-      color: rgba(241, 238, 232, 0.64);
-      max-width: 34rem;
+    .hero-note {
+      max-width: 36rem;
+      color: var(--muted-2);
+      font-size: 1rem;
     }
 
     section {
       position: relative;
       z-index: 1;
-      padding: 90px 42px;
-      background: linear-gradient(180deg, #070b12 0%, #0a1018 100%);
+      padding: 92px 36px;
+      background:
+        linear-gradient(180deg, rgba(5,9,19,0.14) 0%, rgba(5,9,19,0.90) 18%, rgba(4,8,15,1) 100%);
     }
 
     .container {
-      width: min(1100px, 100%);
+      width: min(var(--max), 100%);
       margin: 0 auto;
     }
 
     .intro {
       display: grid;
-      grid-template-columns: 1.15fr 0.85fr;
+      grid-template-columns: 1.2fr 0.8fr;
       gap: 36px;
       align-items: start;
+      margin-bottom: 54px;
     }
 
     h2 {
-      margin: 0 0 18px;
-      font-size: clamp(2rem, 4vw, 3rem);
+      margin: 0 0 16px;
+      font-size: clamp(2.1rem, 4vw, 3.2rem);
       font-weight: 400;
-      line-height: 1.05;
+      line-height: 1.04;
       letter-spacing: -0.02em;
     }
 
-    p.lead {
+    .lead {
       margin: 0;
-      font-size: 1.12rem;
+      font-size: 1.1rem;
       color: var(--muted);
       max-width: 44rem;
     }
 
-    .side-text {
-      padding-top: 8px;
-      color: rgba(241, 238, 232, 0.74);
+    .side-copy {
+      color: var(--muted-2);
       font-size: 1rem;
+      padding-top: 8px;
     }
 
-    .grid {
-      margin-top: 54px;
+    .cards {
       display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
+      grid-template-columns: repeat(3, minmax(0,1fr));
       gap: 18px;
+      margin-bottom: 18px;
+    }
+
+    .trust-cards {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0,1fr));
+      gap: 18px;
+      margin-top: 18px;
     }
 
     .card {
@@ -267,59 +290,170 @@
 
     .card p {
       margin: 0;
-      color: rgba(241, 238, 232, 0.72);
-      font-size: 0.98rem;
-    }
-
-    .trust {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 18px;
-      margin-top: 54px;
+      color: var(--muted);
+      font-size: 0.99rem;
     }
 
     .quote {
-      margin-top: 54px;
-      padding-top: 26px;
+      margin-top: 48px;
+      padding-top: 24px;
       border-top: 1px solid rgba(255,255,255,0.08);
-      color: rgba(241, 238, 232, 0.78);
-      font-size: 1.02rem;
-      max-width: 46rem;
+      max-width: 48rem;
+      color: rgba(240,237,230,0.86);
+      font-size: 1.04rem;
     }
 
     .cta {
-      text-align: left;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 18px;
-      flex-wrap: wrap;
-      margin-top: 64px;
+      margin-top: 58px;
       padding-top: 28px;
       border-top: 1px solid rgba(255,255,255,0.08);
+      display: flex;
+      justify-content: space-between;
+      gap: 18px;
+      align-items: center;
+      flex-wrap: wrap;
     }
 
-    .cta-text {
-      color: rgba(241, 238, 232, 0.74);
+    .cta-title {
+      margin: 0 0 8px;
+      font-size: 1.24rem;
+      font-weight: 400;
+    }
+
+    .cta-copy {
+      margin: 0;
+      color: var(--muted);
+    }
+
+    .begin {
+      position: relative;
+      z-index: 1;
+      padding: 92px 36px 110px;
+      background:
+        radial-gradient(circle at 14% 16%, rgba(94,126,173,0.12), transparent 22%),
+        linear-gradient(180deg, #04080f 0%, #03070c 100%);
+    }
+
+    .begin-wrap {
+      width: min(var(--max), 100%);
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 28px;
+      align-items: stretch;
+    }
+
+    .begin-panel,
+    .begin-form {
+      background: rgba(7, 14, 25, 0.58);
+      border: 1px solid rgba(255,255,255,0.10);
+      border-radius: 22px;
+      padding: 30px;
+      box-shadow: 0 12px 34px rgba(0,0,0,0.28);
+      backdrop-filter: blur(8px);
+    }
+
+    .eyebrow {
+      font-size: 0.84rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: rgba(240,237,230,0.56);
+      margin-bottom: 12px;
+    }
+
+    .begin-panel h2,
+    .begin-form h2 {
+      margin-bottom: 14px;
+    }
+
+    .begin-panel p,
+    .begin-form p {
+      color: var(--muted);
+      margin-top: 0;
+    }
+
+    .steps {
+      margin-top: 28px;
+      display: grid;
+      gap: 14px;
+    }
+
+    .step {
+      padding: 16px 18px;
+      border-radius: 14px;
+      border: 1px solid rgba(255,255,255,0.10);
+      background: rgba(255,255,255,0.02);
+    }
+
+    .step strong {
+      display: block;
+      font-weight: 400;
+      margin-bottom: 6px;
+      color: var(--text);
+    }
+
+    .step span {
+      color: var(--muted-2);
+      font-size: 0.97rem;
+    }
+
+    form {
+      margin-top: 22px;
+      display: grid;
+      gap: 16px;
+    }
+
+    label {
+      display: grid;
+      gap: 8px;
+      color: rgba(240,237,230,0.92);
+      font-size: 0.96rem;
+    }
+
+    input, textarea, select {
+      width: 100%;
+      border-radius: 12px;
+      border: 1px solid rgba(255,255,255,0.12);
+      background: rgba(0,0,0,0.18);
+      color: var(--text);
+      padding: 14px 14px;
+      font: inherit;
+      outline: none;
+    }
+
+    input::placeholder,
+    textarea::placeholder { color: rgba(240,237,230,0.36); }
+
+    textarea {
+      min-height: 128px;
+      resize: vertical;
+    }
+
+    .form-note {
+      color: var(--muted-2);
+      font-size: 0.92rem;
+      margin-top: 6px;
     }
 
     footer {
-      padding: 28px 42px 42px;
-      background: #070b12;
-      color: rgba(241, 238, 232, 0.56);
+      position: relative;
+      z-index: 1;
+      padding: 30px 36px 40px;
+      background: #03070c;
+      color: rgba(240,237,230,0.56);
       font-size: 0.9rem;
     }
 
     .footer-inner {
-      width: min(1100px, 100%);
+      width: min(var(--max), 100%);
       margin: 0 auto;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      gap: 14px;
+      gap: 16px;
       flex-wrap: wrap;
+      padding-top: 20px;
       border-top: 1px solid rgba(255,255,255,0.08);
-      padding-top: 22px;
     }
 
     .footer-links {
@@ -331,133 +465,188 @@
     @media (max-width: 980px) {
       .hero-inner,
       .intro,
-      .trust {
+      .begin-wrap,
+      .cards,
+      .trust-cards {
         grid-template-columns: 1fr;
       }
 
-      .spacer { min-height: 120px; }
-
-      .copy {
-        justify-self: start;
-        padding: 20px 0 0;
-      }
-
-      .grid { grid-template-columns: 1fr; }
+      .visual-space { min-height: 180px; }
+      .copy { justify-self: start; padding-right: 0; }
     }
 
     @media (max-width: 640px) {
       .topbar,
-      .hero-inner,
       section,
-      footer {
-        padding-left: 22px;
-        padding-right: 22px;
-      }
+      .begin,
+      footer { padding-left: 22px; padding-right: 22px; }
 
       .topbar {
+        flex-direction: column;
         align-items: flex-start;
         gap: 10px;
-        flex-direction: column;
       }
 
-      .hero-inner { padding-top: 130px; }
+      .hero-inner {
+        width: calc(100% - 44px);
+        padding-top: 132px;
+        padding-bottom: 64px;
+      }
 
-      h1 { font-size: 2.9rem; }
-
+      h1 { font-size: 3rem; }
       .actions { flex-direction: column; align-items: flex-start; }
-
       .btn { width: 100%; }
     }
   </style>
 </head>
 <body>
-  <header class="hero">
-    <div class="topbar">
-      <div class="brand">Was bleibt.</div>
-      <nav class="lang" aria-label="Sprachauswahl">
-        <a href="#" class="active">DE</a>
-        <a href="#">EN</a>
-        <a href="#">FR</a>
-        <a href="#">ES</a>
-        <a href="#">IT</a>
-        <a href="#">RU</a>
-      </nav>
-    </div>
+  <div class="page-shell">
+    <div class="mist"></div>
 
-    <div class="hero-inner">
-      <div class="spacer"></div>
-      <div class="copy">
-        <h1>Was bleibt.</h1>
-        <div class="subline">Erzähle dein Leben.</div>
-        <div class="tagline">Für die, die nach dir kommen — ruhig, strukturiert und in deinem eigenen Tempo.</div>
-        <div class="actions">
-          <a class="btn btn-primary" href="#start">Beginnen</a>
-          <a class="btn btn-secondary" href="#mehr">Mehr erfahren</a>
+    <header class="hero">
+      <div class="topbar">
+        <div class="brand">Was bleibt.</div>
+        <nav class="lang" aria-label="Sprachauswahl">
+          <a href="#" class="active">DE</a>
+          <a href="#">EN</a>
+          <a href="#">FR</a>
+          <a href="#">ES</a>
+          <a href="#">IT</a>
+          <a href="#">RU</a>
+        </nav>
+      </div>
+
+      <div class="hero-inner">
+        <div class="visual-space" aria-hidden="true"></div>
+
+        <div class="copy">
+          <h1>Was bleibt.</h1>
+          <div class="subline">Erzähle dein Leben.</div>
+          <div class="tagline">Für die, die nach dir kommen — ruhig, strukturiert und in deinem eigenen Tempo.</div>
+
+          <div class="actions">
+            <a class="btn btn-primary" href="#begin">Beginnen</a>
+            <a class="btn btn-secondary" href="#mehr">Mehr erfahren</a>
+          </div>
+
+          <div class="hero-note">
+            Dein Lebensarchiv folgt nur deinen Regeln. Du bestimmst, was aufgezeichnet wird und was davon weitergegeben wird. Du legst fest, wer Zugriff erhält — und zu welchem Zeitpunkt. Im Leben. Und auch danach.
+          </div>
         </div>
-        <div class="note">Dein Lebensarchiv folgt nur deinen Regeln. Du bestimmst, was aufgezeichnet wird – und was davon weitergegeben wird. Du legst fest, wer Zugriff erhält – und zu welchem Zeitpunkt. Im Leben. Und auch danach.</div>
       </div>
-    </div>
-  </header>
+    </header>
 
-  <section id="mehr">
-    <div class="container">
-      <div class="intro">
-        <div>
-          <h2>Nicht jeder schreibt ein Buch. Aber jeder hat eine Geschichte.</h2>
-          <p class="lead">Was bleibt, ist ein ruhiger Ort für persönliche Lebensaufzeichnungen. Du sprichst über dein Leben, deine Erfahrungen, deine Höhen und Tiefen, deine Werte und deine Botschaften an die Menschen, die dir wichtig sind.</p>
+    <section id="mehr">
+      <div class="container">
+        <div class="intro">
+          <div>
+            <h2>Nicht jeder schreibt ein Buch. Aber jeder hinterlässt Spuren.</h2>
+            <p class="lead">What Remains ist ein Lebensarchiv für persönliche Aufzeichnungen, Erinnerungen und Botschaften. Du hältst dein Leben in Kapiteln fest — als Stimme, als Text, in deinem eigenen Rhythmus.</p>
+          </div>
+          <div class="side-copy">Kein lautes Produkt. Kein technischer Selbstzweck. Sondern ein ruhiger Ort, an dem Erinnerungen geordnet, geschützt und nur nach deinen Vorgaben weitergegeben werden.</div>
         </div>
-        <div class="side-text">Keine Show. Kein Lärm. Kein technischer Überbau im Vordergrund. Sondern eine klare, würdige Form, Erinnerungen festzuhalten und kontrolliert weiterzugeben.</div>
-      </div>
 
-      <div class="grid">
-        <article class="card">
-          <h3>Erzählen</h3>
-          <p>Du wirst durch klare Fragen geführt und kannst dein Leben als Audioaufnahme oder ergänzend in Textform festhalten.</p>
-        </article>
-        <article class="card">
-          <h3>Ordnen</h3>
-          <p>Deine Inhalte werden in Kapitel gegliedert — von Herkunft und Wendepunkten bis zu Botschaften an Familie und Freunde.</p>
-        </article>
-        <article class="card">
-          <h3>Weitergeben</h3>
-          <p>Du bestimmst, wer Zugriff erhält, wann Inhalte freigegeben werden und was privat bleiben soll.</p>
-        </article>
-      </div>
-
-      <div class="trust">
-        <article class="card">
-          <h3>Kontrolle</h3>
-          <p>Dein Lebensarchiv folgt nur deinen Regeln. Du bestimmst, was aufgezeichnet wird, was davon weitergegeben wird und wer Zugriff zu welchem Zeitpunkt erhält.</p>
-        </article>
-        <article class="card">
-          <h3>Vertrauen</h3>
-          <p>Die Betreiber der Plattform haben zu keinem Zeitpunkt Zugriff auf deine Aufzeichnungen und können ihn auch nicht herstellen.</p>
-        </article>
-      </div>
-
-      <div class="quote">Ein Lebensarchiv für persönliche Aufzeichnungen, Erinnerungen und Botschaften — geordnet, mehrsprachig vorbereitet und nur nach deinen Vorgaben weitergegeben.</div>
-
-      <div class="cta" id="start">
-        <div>
-          <h3 style="margin:0 0 8px; font-size:1.2rem; font-weight:400;">Beginne dein persönliches Archiv.</h3>
-          <div class="cta-text">Einmaliger Zugang. Ohne Verpflichtung. Mehrsprachig vorbereitet.</div>
+        <div class="cards">
+          <article class="card">
+            <h3>Erzählen</h3>
+            <p>Du wirst durch klare Fragen geführt und kannst dein Leben als Audioaufnahme oder ergänzend in Textform festhalten.</p>
+          </article>
+          <article class="card">
+            <h3>Ordnen</h3>
+            <p>Deine Inhalte werden in Kapitel gegliedert — von Herkunft und Wendepunkten bis zu Botschaften an Familie und Freunde.</p>
+          </article>
+          <article class="card">
+            <h3>Weitergeben</h3>
+            <p>Du legst fest, wer Zugriff erhält, wann Inhalte weitergegeben werden und welche Teile nur für dich bestimmt bleiben.</p>
+          </article>
         </div>
-        <a class="btn btn-primary" href="#">Jetzt starten</a>
-      </div>
-    </div>
-  </section>
 
-  <footer>
-    <div class="footer-inner">
-      <div>© Was bleibt.</div>
-      <div class="footer-links">
-        <a href="#">Impressum</a>
-        <a href="#">Datenschutz</a>
-        <a href="#">AGB</a>
-        <a href="#">Kontakt</a>
+        <div class="trust-cards">
+          <article class="card">
+            <h3>Kontrolle</h3>
+            <p>Du bestimmst, was aufgezeichnet wird, was davon weitergegeben wird und wer Zugriff zu welchem Zeitpunkt erhält.</p>
+          </article>
+          <article class="card">
+            <h3>Vertrauen</h3>
+            <p>Die Betreiber der Plattform haben zu keinem Zeitpunkt Zugriff auf deine Aufzeichnungen und können ihn auch nicht herstellen.</p>
+          </article>
+        </div>
+
+        <div class="quote">Ein Lebensarchiv für Familie, Freunde und die, die nach dir kommen — geordnet, mehrsprachig vorbereitet und ausschließlich nach deinen Vorgaben zugänglich.</div>
+
+        <div class="cta">
+          <div>
+            <h3 class="cta-title">Beginne dein persönliches Archiv.</h3>
+            <p class="cta-copy">Einmaliger Zugang. Ohne Verpflichtung. Jederzeit exportierbar.</p>
+          </div>
+          <a class="btn btn-primary" href="#begin">Jetzt starten</a>
+        </div>
       </div>
-    </div>
-  </footer>
+    </section>
+
+    <section class="begin" id="begin">
+      <div class="begin-wrap">
+        <div class="begin-panel">
+          <div class="eyebrow">Beginnen</div>
+          <h2>Dein Archiv beginnt nicht mit Technik. Sondern mit deiner Geschichte.</h2>
+          <p>Der Einstieg bleibt bewusst ruhig und einfach. Kapitel für Kapitel entsteht daraus ein geordnetes Lebensarchiv — in deiner Stimme, in deinen Worten und unter deinen Regeln.</p>
+
+          <div class="steps">
+            <div class="step">
+              <strong>1. Einstieg</strong>
+              <span>Du beginnst mit den ersten Angaben und entscheidest selbst, wie persönlich dein Archiv aufgebaut wird.</span>
+            </div>
+            <div class="step">
+              <strong>2. Aufzeichnen</strong>
+              <span>Du hältst Erinnerungen, Erfahrungen, Höhen, Tiefen und Botschaften in Audio oder Text fest.</span>
+            </div>
+            <div class="step">
+              <strong>3. Regeln festlegen</strong>
+              <span>Du bestimmst, wer Zugriff erhält, was weitergegeben wird und wann Inhalte zugänglich werden.</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="begin-form">
+          <div class="eyebrow">Erster Zugang</div>
+          <h2>Beginne dein Lebensarchiv.</h2>
+          <p>Diese erste Fassung dient als ruhiger Auftakt. Der nächste Ausbauschritt führt direkt in die Aufnahme und Kapitelstruktur.</p>
+
+          <form>
+            <label>
+              Dein Name
+              <input type="text" placeholder="Wie möchtest du im Archiv erscheinen?" />
+            </label>
+
+            <label>
+              E-Mail
+              <input type="email" placeholder="für deinen späteren Zugang" />
+            </label>
+
+            <label>
+              Wo beginnt deine Geschichte?
+              <textarea placeholder="Ein erster Satz, ein Ort, eine Erinnerung oder einfach der Anfang."></textarea>
+            </label>
+
+            <button type="button" class="btn btn-primary">Speichern und weiter</button>
+            <div class="form-note">Die Betreiber der Plattform haben zu keinem Zeitpunkt Zugriff auf deine Aufzeichnungen und können ihn auch nicht herstellen.</div>
+          </form>
+        </div>
+      </div>
+    </section>
+
+    <footer>
+      <div class="footer-inner">
+        <div>© What Remains</div>
+        <div class="footer-links">
+          <a href="#">Impressum</a>
+          <a href="#">Datenschutz</a>
+          <a href="#">AGB</a>
+          <a href="#">Kontakt</a>
+        </div>
+      </div>
+    </footer>
+  </div>
 </body>
 </html>
 
