@@ -54,12 +54,14 @@
       content: "";
       position: absolute;
       inset: 0;
-      background-image: url('a_digital_photograph_depicts_a_dimly_lit_room_with.png');
+      background-image:
+        linear-gradient(90deg, rgba(4,8,14,0.62) 0%, rgba(4,8,14,0.18) 34%, rgba(4,8,14,0.28) 100%),
+        url('a_digital_photograph_depicts_a_dimly_lit_room_with.png');
       background-size: cover;
       background-position: left center;
-      transform: scale(1.04);
-      filter: saturate(0.76) brightness(0.72) contrast(1.04) blur(0.2px);
-      opacity: 0.78;
+      transform: scale(1.06);
+      filter: saturate(0.72) brightness(0.66) contrast(1.03) blur(0.35px);
+      opacity: 0.9;
     }
 
     .hero::after {
@@ -67,11 +69,13 @@
       position: absolute;
       inset: 0;
       background:
-        radial-gradient(circle at 26% 18%, rgba(170, 195, 228, 0.22), transparent 20%),
-        radial-gradient(circle at 26% 20%, rgba(182, 205, 233, 0.10), transparent 34%),
-        linear-gradient(180deg, rgba(8,12,20,0.24) 0%, rgba(5,8,14,0.38) 100%);
+        radial-gradient(circle at 18% 14%, rgba(167, 193, 224, 0.24), transparent 16%),
+        radial-gradient(circle at 23% 24%, rgba(150, 177, 213, 0.14), transparent 28%),
+        radial-gradient(circle at 27% 58%, rgba(201, 218, 239, 0.08), transparent 34%),
+        linear-gradient(90deg, rgba(8,12,20,0.18) 0%, rgba(8,12,20,0.05) 38%, rgba(5,8,14,0.28) 100%),
+        linear-gradient(180deg, rgba(8,12,20,0.22) 0%, rgba(5,8,14,0.40) 100%);
       mix-blend-mode: screen;
-      opacity: 0.68;
+      opacity: 0.78;
       pointer-events: none;
     }
 
@@ -390,7 +394,7 @@
           <a class="btn btn-primary" href="#start">Beginnen</a>
           <a class="btn btn-secondary" href="#mehr">Mehr erfahren</a>
         </div>
-        <div class="note">Persönliche Audioaufzeichnungen, geordnet in Kapitel. Zugriff nur nach deinen Vorgaben. Export jederzeit möglich.</div>
+        <div class="note">Dein Lebensarchiv folgt nur deinen Regeln. Du bestimmst, was aufgezeichnet wird – und was davon weitergegeben wird. Du legst fest, wer Zugriff erhält – und zu welchem Zeitpunkt. Im Leben. Und auch danach.</div>
       </div>
     </div>
   </header>
@@ -423,15 +427,15 @@
       <div class="trust">
         <article class="card">
           <h3>Kontrolle</h3>
-          <p>Deine Inhalte gehören dir. Du legst fest, welche Personen Zugang erhalten und unter welchen Bedingungen.</p>
+          <p>Dein Lebensarchiv folgt nur deinen Regeln. Du bestimmst, was aufgezeichnet wird, was davon weitergegeben wird und wer Zugriff zu welchem Zeitpunkt erhält.</p>
         </article>
         <article class="card">
-          <h3>Sicherheit</h3>
-          <p>Du kannst deine Inhalte jederzeit exportieren und eigenständig sichern. Keine überzogenen Versprechen, sondern klare Verantwortung.</p>
+          <h3>Vertrauen</h3>
+          <p>Die Betreiber der Plattform haben zu keinem Zeitpunkt Zugriff auf deine Aufzeichnungen und können ihn auch nicht herstellen.</p>
         </article>
       </div>
 
-      <div class="quote">Ein Dienst zur Erstellung und Verwaltung persönlicher Lebensaufzeichnungen — für Familie, Freunde und die, die nach dir kommen.</div>
+      <div class="quote">Ein Lebensarchiv für persönliche Aufzeichnungen, Erinnerungen und Botschaften — geordnet, mehrsprachig vorbereitet und nur nach deinen Vorgaben weitergegeben.</div>
 
       <div class="cta" id="start">
         <div>
@@ -456,3 +460,4 @@
   </footer>
 </body>
 </html>
+
