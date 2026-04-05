@@ -7,12 +7,11 @@
   <style>
     :root {
       --bg: #050913;
-      --bg-soft: #08101b;
       --text: #f1eee8;
       --muted: rgba(241, 238, 232, 0.78);
       --muted-2: rgba(241, 238, 232, 0.60);
       --line: rgba(255,255,255,0.10);
-      --card: rgba(8, 14, 24, 0.64);
+      --card: rgba(8, 14, 24, 0.58);
       --gold: #c39a5b;
       --gold-text: #fff9ef;
       --shadow: rgba(0,0,0,0.34);
@@ -32,11 +31,9 @@
 
     body {
       min-height: 100vh;
-      line-height: 1.45;
+      line-height: 1.42;
       letter-spacing: 0.01em;
-      background:
-        radial-gradient(circle at 18% 12%, rgba(123,153,203,0.08), transparent 18%),
-        linear-gradient(180deg, #050913 0%, #03070d 100%);
+      background: linear-gradient(180deg, #050913 0%, #03070d 100%);
     }
 
     a { color: inherit; text-decoration: none; }
@@ -46,7 +43,7 @@
       min-height: 100vh;
       overflow: hidden;
       background:
-        linear-gradient(90deg, rgba(4,8,15,0.78) 0%, rgba(4,8,15,0.28) 36%, rgba(4,8,15,0.64) 100%),
+        linear-gradient(90deg, rgba(4,8,15,0.78) 0%, rgba(4,8,15,0.30) 38%, rgba(4,8,15,0.64) 100%),
         linear-gradient(180deg, rgba(4,8,15,0.12) 0%, rgba(4,8,15,0.66) 100%),
         #050913;
     }
@@ -56,9 +53,9 @@
       position: absolute;
       inset: 0;
       background:
-        linear-gradient(90deg, rgba(4,8,15,0.46) 0%, rgba(4,8,15,0.10) 36%, rgba(4,8,15,0.38) 100%),
+        linear-gradient(90deg, rgba(4,8,15,0.44) 0%, rgba(4,8,15,0.10) 36%, rgba(4,8,15,0.38) 100%),
         url('hero-room.png') center center / cover no-repeat;
-      filter: brightness(0.62) saturate(0.80) contrast(1.02) blur(0.2px);
+      filter: brightness(0.62) saturate(0.80) contrast(1.02);
       transform: scale(1.03);
       opacity: 0.94;
     }
@@ -80,7 +77,7 @@
       z-index: 3;
       width: min(var(--max), calc(100% - 72px));
       margin: 0 auto;
-      padding: 28px 0;
+      padding: 24px 0 0;
       display: flex;
       justify-content: space-between;
       align-items: center;
@@ -105,172 +102,164 @@
     }
 
     .top-links a:hover { color: rgba(241, 238, 232, 1); }
-    
-.shell {
-  position: relative;
-  z-index: 2;
-  width: min(var(--max), calc(100% - 72px));
-  margin: 0 auto;
-  padding: 28px 0 44px;
-  display: grid;
-  grid-template-columns: 1.02fr 0.98fr;
-  gap: 24px;
-  align-items: start;
-}
 
-.panel,
-.form-panel {
-  background: rgba(8, 14, 24, 0.56);
-  border: 1px solid rgba(255,255,255,0.10);
-  border-radius: 24px;
-  padding: 24px;
-  box-shadow: 0 18px 44px rgba(0,0,0,0.28);
-  backdrop-filter: blur(8px);
-  display: flex;
-  flex-direction: column;
-}
+    .shell {
+      position: relative;
+      z-index: 2;
+      width: min(var(--max), calc(100% - 72px));
+      margin: 0 auto;
+      padding: 34px 0 38px;
+      display: grid;
+      grid-template-columns: 1.02fr 0.98fr;
+      gap: 24px;
+      align-items: start;
+    }
 
-.eyebrow {
-  font-size: 0.84rem;
-  text-transform: uppercase;
-  letter-spacing: 0.10em;
-  color: rgba(241,238,232,0.56);
-  margin-bottom: 10px;
-}
+    .panel,
+    .form-panel {
+      background: var(--card);
+      border: 1px solid rgba(255,255,255,0.10);
+      border-radius: 24px;
+      padding: 24px;
+      box-shadow: 0 18px 44px rgba(0,0,0,0.28);
+      backdrop-filter: blur(8px);
+      display: flex;
+      flex-direction: column;
+    }
 
-h1 {
-  margin: 0 0 16px;
-  font-size: clamp(2.3rem, 4vw, 3.4rem);
-  line-height: 1.02;
-  font-weight: 400;
-  letter-spacing: -0.02em;
-}
+    .eyebrow {
+      font-size: 0.84rem;
+      text-transform: uppercase;
+      letter-spacing: 0.10em;
+      color: rgba(241,238,232,0.56);
+      margin-bottom: 10px;
+    }
 
-.lead {
-  margin: 0 0 20px;
-  color: var(--muted);
-  font-size: 1.04rem;
-  max-width: 34rem;
-}
+    h1 {
+      margin: 0 0 16px;
+      font-size: clamp(2.25rem, 4vw, 3.35rem);
+      line-height: 1.02;
+      font-weight: 400;
+      letter-spacing: -0.02em;
+    }
 
-.steps {
-  margin-top: 20px;
-  display: grid;
-  gap: 12px;
-}
+    .lead {
+      margin: 0 0 20px;
+      color: var(--muted);
+      font-size: 1.02rem;
+      max-width: 34rem;
+    }
 
-.trust {
-  margin-top: 20px; /* exakt gleiche Logik wie steps */
-}
+    .steps {
+      margin-top: 20px;
+      display: grid;
+      gap: 12px;
+    }
 
-.step {
-  background: rgba(255,255,255,0.03);
-  border: 1px solid rgba(255,255,255,0.08);
-  border-radius: 16px;
-  padding: 14px 16px;
-}
+    .step {
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 16px;
+      padding: 14px 16px;
+    }
 
-.step strong {
-  display: block;
-  margin-bottom: 6px;
-  font-weight: 400;
-  color: var(--text);
-  font-size: 1rem;
-  line-height: 1.2;
-}
+    .step strong {
+      display: block;
+      margin-bottom: 6px;
+      font-weight: 400;
+      color: var(--text);
+      font-size: 1rem;
+      line-height: 1.2;
+    }
 
-.step span {
-  color: var(--muted-2);
-  font-size: 0.95rem;
-  line-height: 1.35;
-}
-.trust {
-  margin-top: 18px;
-  padding-top: 16px;
-  border-top: 1px solid rgba(255,255,255,0.08);
-  color: var(--muted);
-  font-size: 0.98rem;
-  line-height: 1.4;
-}
+    .step span {
+      color: var(--muted-2);
+      font-size: 0.95rem;
+      line-height: 1.35;
+    }
+
+    .trust {
+      margin-top: 20px;
+      padding-top: 16px;
+      border-top: 1px solid rgba(255,255,255,0.08);
+      color: var(--muted);
+      font-size: 0.98rem;
+      line-height: 1.4;
+    }
+
+    .trust strong {
+      display: block;
+      margin-bottom: 6px;
+      font-weight: 400;
+      color: var(--text);
+    }
+
     h2 {
-  margin: 0 0 14px;
-  font-size: 1.7rem;
-  line-height: 1.08;
-  font-weight: 400;
-}
+      margin: 0 0 14px;
+      font-size: 1.7rem;
+      line-height: 1.08;
+      font-weight: 400;
+    }
 
-.form-copy {
-  margin: 0 0 20px;
-  color: var(--muted);
-  font-size: 1rem;
-}
+    .form-copy {
+      margin: 0 0 20px;
+      color: var(--muted);
+      font-size: 1rem;
+    }
 
-form {
-  display: grid;
-  gap: 14px;
-}
+    form {
+      display: grid;
+      gap: 14px;
+    }
 
-label {
-  display: grid;
-  gap: 8px;
-  color: rgba(241,238,232,0.92);
-  font-size: 0.96rem;
-  line-height: 1.25;
-}
-
-.row {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 12px;
-}
-
-input,
-select,
-textarea {
-  width: 100%;
-  border-radius: 12px;
-  border: 1px solid rgba(255,255,255,0.12);
-  background: rgba(0,0,0,0.18);
-  color: var(--text);
-  padding: 12px 14px;
-  font: inherit;
-  outline: none;
-}
-    input::placeholder,
-    textarea::placeholder { color: rgba(241,238,232,0.36); }
-
-    textarea {
-      min-height: 118px;
-      resize: vertical;
+    label {
+      display: grid;
+      gap: 8px;
+      color: rgba(241,238,232,0.92);
+      font-size: 0.96rem;
+      line-height: 1.25;
     }
 
     .row {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 14px;
+      gap: 12px;
+    }
+
+    input,
+    select,
+    textarea {
+      width: 100%;
+      border-radius: 12px;
+      border: 1px solid rgba(255,255,255,0.12);
+      background: rgba(0,0,0,0.18);
+      color: var(--text);
+      padding: 12px 14px;
+      font: inherit;
+      outline: none;
+    }
+
+    input::placeholder,
+    textarea::placeholder { color: rgba(241,238,232,0.36); }
+
+    textarea {
+      min-height: 108px;
+      resize: vertical;
     }
 
     .helper {
       color: var(--muted-2);
       font-size: 0.9rem;
-      margin-top: 4px;
+      margin-top: 2px;
+      line-height: 1.35;
     }
 
     .actions {
-  display: flex;
-  gap: 12px;
-  flex-wrap: wrap;
-  margin-top: 10px;
-}
-
-.foot-note {
-  margin-top: 16px;
-  padding-top: 14px;
-  border-top: 1px solid rgba(255,255,255,0.08);
-  color: var(--muted-2);
-  font-size: 0.92rem;
-  line-height: 1.35;
-}
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-top: 8px;
+    }
 
     .btn {
       min-height: 52px;
@@ -301,11 +290,12 @@ textarea {
     }
 
     .foot-note {
-      margin-top: 18px;
-      padding-top: 16px;
+      margin-top: 16px;
+      padding-top: 14px;
       border-top: 1px solid rgba(255,255,255,0.08);
       color: var(--muted-2);
       font-size: 0.92rem;
+      line-height: 1.35;
     }
 
     @media (max-width: 980px) {
@@ -372,7 +362,7 @@ textarea {
         </div>
 
         <div class="trust">
-          <strong>Dein Lebensarchiv folgt nur deinen Regeln.</strong><br>
+          <strong>Dein Lebensarchiv folgt nur deinen Regeln.</strong>
           Du bestimmst, was aufgezeichnet wird und was davon weitergegeben wird. Du legst fest, wer Zugriff erhält — und zu welchem Zeitpunkt. Im Leben. Und auch danach.
         </div>
       </section>
@@ -413,18 +403,18 @@ textarea {
 
           <label>
             Wo beginnt deine Geschichte?
-            <textarea placeholder="Ein erster Satz, ein Ort, eine Erinnerung oder einfach der Anfang."></textarea>
+            <textarea placeholder="Ein erster Satz. Ein Ort. Eine Erinnerung. Oder einfach dein Anfang."></textarea>
           </label>
 
           <div class="helper">Diese Angaben sind der Ausgangspunkt. Im nächsten Schritt wird daraus dein persönlicher Zugang erstellt.</div>
 
           <div class="actions">
-            <button type="button" class="btn btn-primary">Archiv vorbereiten</button>
+            <button type="button" class="btn btn-primary">Archiv erstellen</button>
             <a class="btn btn-secondary" href="index.html#begin">Später fortsetzen</a>
           </div>
         </form>
 
-        <div class="foot-note">Die Betreiber der Plattform haben zu keinem Zeitpunkt Zugriff auf deine Aufzeichnungen und können ihn auch nicht herstellen.</div>
+        <div class="foot-note">Die Betreiber dieses Archivs haben zu keinem Zeitpunkt Zugriff auf deine Aufzeichnungen und können ihn auch nicht herstellen.</div>
       </section>
     </main>
   </div>
