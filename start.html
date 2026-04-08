@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="de">
 <head>
@@ -23,27 +24,36 @@
     html, body {
       margin: 0;
       padding: 0;
-      min-height: 100%;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
       background: var(--bg);
       color: var(--text);
       font-family: Georgia, "Times New Roman", serif;
     }
 
     body {
-      min-height: 100vh;
       line-height: 1.45;
       letter-spacing: 0.01em;
+      background: linear-gradient(180deg, #050913 0%, #03070d 100%);
+    }
+
+    a { color: inherit; text-decoration: none; }
+
+    .page {
+      position: relative;
+      width: 100%;
+      height: 100vh;
+      overflow: hidden;
       background:
         linear-gradient(90deg, rgba(4,8,15,0.78) 0%, rgba(4,8,15,0.28) 36%, rgba(4,8,15,0.64) 100%),
         linear-gradient(180deg, rgba(4,8,15,0.10) 0%, rgba(4,8,15,0.56) 100%),
         #050913;
-      position: relative;
-      overflow-x: hidden;
     }
 
-    body::before {
+    .page::before {
       content: "";
-      position: fixed;
+      position: absolute;
       inset: 0;
       background:
         linear-gradient(90deg, rgba(4,8,15,0.44) 0%, rgba(4,8,15,0.06) 32%, rgba(4,8,15,0.34) 100%),
@@ -51,12 +61,11 @@
       transform: scale(1.02);
       filter: brightness(0.72) saturate(0.82) contrast(1.04);
       opacity: 0.96;
-      z-index: -2;
     }
 
-    body::after {
+    .page::after {
       content: "";
-      position: fixed;
+      position: absolute;
       inset: 0;
       background:
         radial-gradient(circle at 20% 18%, rgba(168, 195, 230, 0.22), transparent 14%),
@@ -65,13 +74,14 @@
         linear-gradient(180deg, rgba(255,255,255,0.03), rgba(4,8,15,0.12));
       mix-blend-mode: screen;
       pointer-events: none;
-      z-index: -1;
     }
 
-    a { color: inherit; text-decoration: none; }
-
     .topbar {
+      position: absolute;
+      top: 0;
+      left: 0;
       width: 100%;
+      z-index: 3;
       padding: 28px 36px;
       display: flex;
       justify-content: space-between;
@@ -83,49 +93,53 @@
       letter-spacing: 0.12em;
       text-transform: uppercase;
       color: rgba(241, 238, 232, 0.92);
+      white-space: nowrap;
     }
 
-    .nav {
+    .lang {
       display: flex;
       gap: 14px;
-      flex-wrap: wrap;
       font-size: 0.8rem;
       letter-spacing: 0.08em;
       text-transform: uppercase;
       color: rgba(241, 238, 232, 0.76);
+      white-space: nowrap;
     }
 
-    .nav a:hover,
-    .nav span:hover {
-      color: rgba(241, 238, 232, 1);
-    }
+    .lang a.active,
+    .lang a:hover { color: rgba(241, 238, 232, 1); }
 
-    .wrap {
+    .main {
+      position: relative;
+      z-index: 2;
       width: min(var(--max), calc(100% - 72px));
+      height: 100vh;
       margin: 0 auto;
-      min-height: calc(100vh - 96px);
-      display: grid;
+      display: flex;
       align-items: center;
-      padding: 38px 0 74px;
+      justify-content: center;
+      padding: 96px 0 34px;
     }
 
-    .grid {
+    .begin-wrap {
+      width: 100%;
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 24px;
+      gap: 28px;
       align-items: stretch;
-      max-width: 1020px;
-      width: 100%;
-      margin: 0 auto;
     }
 
-    .card {
-      background: var(--card);
-      border: 1px solid var(--line);
+    .begin-panel,
+    .begin-form {
+      background: rgba(7, 14, 25, 0.58);
+      border: 1px solid rgba(255,255,255,0.10);
       border-radius: 22px;
       padding: 30px;
       box-shadow: 0 12px 34px rgba(0,0,0,0.28);
       backdrop-filter: blur(8px);
+      display: flex;
+      flex-direction: column;
+      min-height: 0;
     }
 
     .eyebrow {
@@ -136,28 +150,25 @@
       margin-bottom: 12px;
     }
 
-    h1, h2 {
+    .begin-panel h2,
+    .begin-form h2 {
       margin: 0 0 14px;
-      font-size: clamp(2.2rem, 3.2vw, 3.3rem);
+      font-size: clamp(1.8rem, 3.2vw, 2.6rem);
       font-weight: 400;
       line-height: 1.04;
       letter-spacing: -0.02em;
     }
 
-    p {
-      margin: 0;
+    .begin-panel p,
+    .begin-form p {
       color: var(--muted);
-    }
-
-    .intro-text {
-      font-size: 1rem;
-      margin-bottom: 28px;
+      margin-top: 0;
     }
 
     .steps {
+      margin-top: 28px;
       display: grid;
       gap: 14px;
-      margin-top: 24px;
     }
 
     .step {
@@ -172,24 +183,20 @@
       font-weight: 400;
       margin-bottom: 6px;
       color: var(--text);
-      font-size: 1.02rem;
+      font-size: 1rem;
+      line-height: 1.22;
     }
 
     .step span {
       color: var(--muted-2);
       font-size: 0.97rem;
-      line-height: 1.45;
-    }
-
-    .form-copy {
-      margin-bottom: 22px;
-      font-size: 1rem;
+      line-height: 1.34;
     }
 
     form {
+      margin-top: 22px;
       display: grid;
       gap: 16px;
-      margin-top: 22px;
     }
 
     label {
@@ -199,7 +206,7 @@
       font-size: 0.96rem;
     }
 
-    input, select, textarea {
+    input, select, textarea, button {
       width: 100%;
       border-radius: 12px;
       border: 1px solid rgba(255,255,255,0.12);
@@ -208,28 +215,44 @@
       padding: 14px 14px;
       font: inherit;
       outline: none;
+      font-family: Georgia, "Times New Roman", serif;
+      appearance: none;
+      -webkit-appearance: none;
+      -moz-appearance: none;
+    }
+
+    select {
+      background-image:
+        linear-gradient(45deg, transparent 50%, rgba(241,238,232,0.75) 50%),
+        linear-gradient(135deg, rgba(241,238,232,0.75) 50%, transparent 50%);
+      background-position:
+        calc(100% - 18px) calc(50% - 3px),
+        calc(100% - 12px) calc(50% - 3px);
+      background-size: 6px 6px, 6px 6px;
+      background-repeat: no-repeat;
+      padding-right: 34px;
     }
 
     input::placeholder,
-    textarea::placeholder {
-      color: rgba(241,238,232,0.36);
-    }
+    textarea::placeholder { color: rgba(241,238,232,0.36); }
 
     textarea {
       min-height: 128px;
-      resize: vertical;
+      resize: none;
     }
 
-    input:focus, select:focus, textarea:focus {
-      border-color: rgba(195, 154, 91, 0.55);
-      box-shadow: 0 0 0 3px rgba(195, 154, 91, 0.10);
+    .form-note {
+      color: var(--muted-2);
+      font-size: 0.92rem;
+      line-height: 1.34;
+      margin-top: 6px;
     }
 
     .actions {
       display: flex;
-      gap: 10px;
-      align-items: center;
+      gap: 14px;
       flex-wrap: wrap;
+      margin-top: 4px;
     }
 
     .btn {
@@ -243,58 +266,67 @@
       font-size: 1rem;
       transition: 0.2s ease;
       box-shadow: 0 14px 32px rgba(0,0,0,0.18);
+      cursor: pointer;
+      white-space: nowrap;
+    }
+
+    .btn-primary {
       background: var(--gold);
       color: var(--gold-text);
-      cursor: pointer;
-      font-family: inherit;
-    }
-
-    .btn:hover {
-      filter: brightness(1.05);
-    }
-
-    .note {
-      color: var(--muted-2);
-      font-size: 0.92rem;
-      margin-top: 4px;
-      line-height: 1.45;
     }
 
     @media (max-width: 980px) {
-      .grid {
+      html, body {
+        overflow: auto;
+      }
+
+      .main {
+        height: auto;
+        min-height: 100vh;
+        align-items: flex-start;
+        padding-top: 110px;
+        padding-bottom: 36px;
+      }
+
+      .begin-wrap {
         grid-template-columns: 1fr;
       }
 
-      .wrap {
-        padding-top: 24px;
+      .begin-panel,
+      .begin-form {
+        min-height: auto;
       }
     }
 
     @media (max-width: 640px) {
+      html, body {
+        overflow: auto;
+      }
+
       .topbar {
-        padding-left: 22px;
-        padding-right: 22px;
         flex-direction: column;
         align-items: flex-start;
         gap: 10px;
+        padding-left: 22px;
+        padding-right: 22px;
       }
 
-      .wrap {
+      .main {
         width: calc(100% - 44px);
-        padding-bottom: 56px;
+        padding-top: 126px;
       }
 
-      .card {
-        padding: 24px 20px;
+      .lang {
+        flex-wrap: wrap;
       }
 
-      h1, h2 {
-        font-size: 2rem;
+      .begin-panel,
+      .begin-form {
+        padding: 22px;
       }
 
       .actions {
         flex-direction: column;
-        align-items: stretch;
       }
 
       .btn {
@@ -304,80 +336,78 @@
   </style>
 </head>
 <body>
-  <header class="topbar">
-    <div class="brand">Was bleibt.</div>
-    <nav class="nav" aria-label="Navigation und Sprache">
-      <a href="index.html">Zurück</a>
-      <span>DE</span>
-      <span>EN</span>
-      <span>FR</span>
-      <span>ES</span>
-      <span>IT</span>
-      <span>RU</span>
-    </nav>
-  </header>
+  <div class="page">
+    <div class="topbar">
+      <div class="brand">Was bleibt.</div>
+      <nav class="lang" aria-label="Sprachauswahl">
+        <a href="index.html">Zurück</a>
+        <a href="#" class="active">DE</a>
+        <a href="#">EN</a>
+        <a href="#">FR</a>
+        <a href="#">ES</a>
+        <a href="#">IT</a>
+        <a href="#">RU</a>
+      </nav>
+    </div>
 
-  <main class="wrap">
-    <section class="grid">
-      <div class="card">
-        <div class="eyebrow">Beginnen</div>
-        <h1>Dein Archiv beginnt nicht mit Technik. Sondern mit deiner Geschichte.</h1>
-        <p class="intro-text">
-          Der Einstieg bleibt bewusst ruhig und einfach. Kapitel für Kapitel entsteht daraus ein geordnetes Lebensarchiv — in deiner Stimme, in deinen Worten und unter deinen Regeln.
-        </p>
+    <main class="main">
+      <div class="begin-wrap">
+        <section class="begin-panel">
+          <div class="eyebrow">Beginnen</div>
+          <h2>Dein Archiv beginnt nicht mit Technik. Sondern mit deiner Geschichte.</h2>
+          <p>Der Einstieg bleibt bewusst ruhig und einfach. Kapitel für Kapitel entsteht daraus ein geordnetes Lebensarchiv — in deiner Stimme, in deinen Worten und unter deinen Regeln.</p>
 
-        <div class="steps">
-          <div class="step">
-            <strong>1. Einstieg</strong>
-            <span>Du beginnst mit den ersten Angaben und entscheidest selbst, wie persönlich dein Archiv aufgebaut wird.</span>
+          <div class="steps">
+            <div class="step">
+              <strong>1. Einstieg</strong>
+              <span>Du beginnst mit den ersten Angaben und entscheidest selbst, wie persönlich dein Archiv aufgebaut wird.</span>
+            </div>
+            <div class="step">
+              <strong>2. Aufzeichnen</strong>
+              <span>Du hältst Erinnerungen, Erfahrungen, Höhen, Tiefen und Botschaften in Audio oder Text fest.</span>
+            </div>
+            <div class="step">
+              <strong>3. Regeln festlegen</strong>
+              <span>Du bestimmst, wer Zugriff erhält, was weitergegeben wird und wann Inhalte zugänglich werden. Im Leben oder danach.</span>
+            </div>
           </div>
-          <div class="step">
-            <strong>2. Aufzeichnen</strong>
-            <span>Du hältst Erinnerungen, Erfahrungen, Höhen, Tiefen und Botschaften in Audio oder Text fest.</span>
-          </div>
-          <div class="step">
-            <strong>3. Regeln festlegen</strong>
-            <span>Du bestimmst, wer Zugriff erhält, was weitergegeben wird und wann Inhalte zugänglich werden.</span>
-          </div>
-        </div>
+        </section>
+
+        <section class="begin-form">
+          <div class="eyebrow">Erster Zugang</div>
+          <h2>Beginne dein Lebensarchiv.</h2>
+          <p>Diese erste Fassung dient als ruhiger Auftakt. Der nächste Ausbauschritt führt direkt in die Aufnahme und Kapitelstruktur.</p>
+
+          <form data-start-form>
+            <label>
+              Dein Name
+              <input type="text" name="displayName" placeholder="Wie möchtest du im Archiv erscheinen?" />
+            </label>
+
+            <label>
+              Beginn
+              <select name="mode">
+                <option value="free">Freier Beginn</option>
+                <option value="guided">Geführter Beginn</option>
+              </select>
+            </label>
+
+            <label>
+              Wo beginnt deine Geschichte?
+              <textarea name="firstEntry" placeholder="Ein erster Satz, ein Ort, eine Erinnerung oder einfach der Anfang."></textarea>
+            </label>
+
+            <div class="actions">
+              <button type="submit" class="btn btn-primary">Speichern und weiter</button>
+            </div>
+
+            <div class="form-note">Die Betreiber der Plattform haben zu keinem Zeitpunkt Zugriff auf deine Aufzeichnungen und können ihn auch nicht herstellen.</div>
+          </form>
+        </section>
       </div>
+    </main>
+  </div>
 
-      <div class="card">
-        <div class="eyebrow">Erster Zugang</div>
-        <h2>Beginne dein Lebensarchiv.</h2>
-        <p class="form-copy">
-          Diese erste Fassung dient als ruhiger Auftakt.
-        </p>
-
-        <form action="archiv.html" method="get">
-          <label for="name">
-            Dein Name
-            <input type="text" id="name" name="name" placeholder="Wie möchtest du im Archiv erscheinen?" />
-          </label>
-
-          <label for="beginn">
-            Beginn
-            <select id="beginn" name="beginn">
-              <option value="Freier Beginn">Freier Beginn</option>
-              <option value="Geführter Beginn">Geführter Beginn</option>
-            </select>
-          </label>
-
-          <label for="story">
-            Wo beginnt deine Geschichte?
-            <textarea id="story" name="story" placeholder="Ein erster Satz, ein Ort, eine Erinnerung oder einfach der Anfang."></textarea>
-          </label>
-
-          <div class="actions">
-            <button type="submit" class="btn">Speichern und weiter</button>
-          </div>
-
-          <div class="note">
-            Die Betreiber der Plattform haben zu keinem Zeitpunkt Zugriff auf deine Aufzeichnungen und können ihn auch nicht herstellen.
-          </div>
-        </form>
-      </div>
-    </section>
-  </main>
+  <script type="module" src="./app.js"></script>
 </body>
 </html>
