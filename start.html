@@ -397,9 +397,10 @@
               <textarea name="firstEntry" placeholder="Ein erster Satz, ein Ort, eine Erinnerung oder einfach der Anfang."></textarea>
             </label>
 
-            <div class="actions">
-              <button type="submit" class="btn btn-primary">Speichern und weiter</button>
-            </div>
+           <div class="actions">
+  <button type="submit" class="btn btn-primary">Speichern und weiter</button>
+  <button type="button" class="btn btn-secondary" id="resumeArchive">Archiv fortsetzen</button>
+</div>
 
             <div class="form-note">Die Betreiber der Plattform haben zu keinem Zeitpunkt Zugriff auf deine Aufzeichnungen und können ihn auch nicht herstellen.</div>
           </form>
@@ -409,5 +410,10 @@
   </div>
 
   <script type="module" src="./app.js"></script>
+  <script>
+document.getElementById("resumeArchive")?.addEventListener("click", function () {
+  window.location.href = "archiv.html";
+});
+</script>
 </body>
 </html>
