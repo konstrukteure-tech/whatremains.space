@@ -102,9 +102,10 @@ function renderArchivePage() {
             <textarea id="chapterEntry" placeholder="Schreibe hier weiter ...">${escapeHtml(firstEntry)}</textarea>
           </label>
 
-          <div class="actions">
-            <button class="btn btn-primary" id="saveEntryBtn" type="button">Speichern</button>
-          </div>
+         <div class="actions">
+  <button class="btn btn-primary" id="saveEntryBtn" type="button">Speichern</button>
+  <button class="btn btn-primary" id="resumeArchive" type="button">Archiv fortsetzen</button>
+</div>
         </article>
 
         <aside class="archive-card">
@@ -120,7 +121,11 @@ function renderArchivePage() {
 
   const saveBtn = document.getElementById("saveEntryBtn");
   const textArea = document.getElementById("chapterEntry");
+const resumeBtn = document.getElementById("resumeArchive");
 
+resumeBtn?.addEventListener("click", () => {
+  alert("Archiv wird fortgesetzt");
+});
   saveBtn?.addEventListener("click", () => {
     const updated = getArchive();
     if (!updated) return;
