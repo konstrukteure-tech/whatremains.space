@@ -147,17 +147,45 @@
   </main>
 
   <script>
-    document.getElementById("openBtn").addEventListener("click", function () {
-      const data = localStorage.getItem("whatremains_archive_v1");
+  document.getElementById("openBtn").addEventListener("click", function () {
+    const raw = localStorage.getItem("whatremains_archive_v1");
+    const error = document.getElementById("errorMsg");
 
-      if (!data) {
-        document.getElementById("errorMsg").style.display = "block";
-        return;
-      }
+    const enteredName = document.getElementById("name").value.trim().toLowerCase();
+    const enteredCode = document.getElementById("code").value.trim().toUpperCase();
 
+    error.style.display = "none";
+
+    if (!raw) {
+      error.style.display = "block";
+      return;
+    }
+
+    let data = null;
+
+    try {
+      data = JSON.parse(raw);
+    } catch {
+      error.style.display = "block";
+      return;
+    }
+
+    const savedName = (data.profile?.displayName || "").trim().toLowerCase();
+    const savedCode = (data.archiveCode || "").trim().toUpperCase();
+
+    if (!enteredName || !enteredCode) {
+      error.style.display = "block";
+      return;
+    }
+
+    if (enteredName === savedName && enteredCode === savedCode) {
       window.location.href = "archiv.html";
-    });
-  </script>
+      return;
+    }
+
+    error.style.display = "block";
+  });
+</script>
 
 </body>
 </html>
