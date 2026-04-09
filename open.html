@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Archiv öffnen</title>
+
+  <style>
+    :root {
+      --bg: #050913;
+      --text: #f1eee8;
+      --muted: rgba(241, 238, 232, 0.76);
+      --line: rgba(255,255,255,0.10);
+      --card: rgba(8, 14, 24, 0.64);
+      --gold: #c39a5b;
+      --max: 1180px;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: Georgia, "Times New Roman", serif;
+      color: var(--text);
+      background:
+        linear-gradient(90deg, rgba(4,8,15,0.82) 0%, rgba(4,8,15,0.34) 36%, rgba(4,8,15,0.70) 100%),
+        url("hero-room.png") center center / cover no-repeat fixed;
+    }
+
+    .topbar {
+      padding: 28px 36px 0;
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .brand {
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      font-size: 0.9rem;
+    }
+
+    .shell {
+      max-width: var(--max);
+      margin: 60px auto;
+      padding: 0 24px;
+    }
+
+    .card {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 20px;
+      padding: 32px;
+      backdrop-filter: blur(8px);
+      max-width: 520px;
+      margin: 0 auto;
+    }
+
+    h1 {
+      margin: 0 0 12px;
+      font-weight: 400;
+    }
+
+    p {
+      color: var(--muted);
+      margin-bottom: 24px;
+    }
+
+    .field {
+      display: grid;
+      gap: 6px;
+      margin-bottom: 18px;
+    }
+
+    input {
+      padding: 12px;
+      border-radius: 10px;
+      border: 1px solid rgba(255,255,255,0.12);
+      background: rgba(0,0,0,0.2);
+      color: var(--text);
+      font: inherit;
+    }
+
+    .actions {
+      display: flex;
+      gap: 12px;
+      margin-top: 10px;
+    }
+
+    .btn {
+      padding: 12px 20px;
+      border-radius: 10px;
+      border: 1px solid transparent;
+      cursor: pointer;
+      font: inherit;
+    }
+
+    .btn-primary {
+      background: var(--gold);
+      color: #fff;
+    }
+
+    .btn-secondary {
+      background: transparent;
+      border: 1px solid var(--line);
+      color: var(--text);
+    }
+
+    .error {
+      margin-top: 12px;
+      color: #c66;
+      display: none;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="topbar">
+    <div class="brand">Was bleibt.</div>
+    <a href="index.html">Zurück</a>
+  </div>
+
+  <main class="shell">
+    <div class="card">
+      <h1>Archiv öffnen</h1>
+      <p>Gib deinen Namen und deinen Archivcode ein, um fortzufahren.</p>
+
+      <div class="field">
+        <label>Name</label>
+        <input type="text" id="name" placeholder="Dein Name" />
+      </div>
+
+      <div class="field">
+        <label>Archivcode</label>
+        <input type="text" id="code" placeholder="Dein Code" />
+      </div>
+
+      <div class="actions">
+        <button class="btn btn-primary" id="openBtn">Öffnen</button>
+        <a class="btn btn-secondary" href="index.html">Abbrechen</a>
+      </div>
+
+      <div class="error" id="errorMsg">
+        Archiv nicht gefunden.
+      </div>
+    </div>
+  </main>
+
+  <script>
+    document.getElementById("openBtn").addEventListener("click", function () {
+      const data = localStorage.getItem("whatremains_archive_v1");
+
+      if (!data) {
+        document.getElementById("errorMsg").style.display = "block";
+        return;
+      }
+
+      window.location.href = "archiv.html";
+    });
+  </script>
+
+</body>
+</html>
