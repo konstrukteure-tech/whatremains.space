@@ -94,7 +94,9 @@ function renderArchivePage() {
       <div class="archive-head">
         <div class="eyebrow">Archiv</div>
         <h1>${escapeHtml(displayName)}</h1>
-        <p class="archive-meta">${escapeHtml(modeLabel)} · erstellt ${formatDate(data.createdAt)}</p>
+        <p class="archive-meta">
+  ${escapeHtml(modeLabel)} · erstellt ${formatDate(data.createdAt)} · Code ${escapeHtml(data.archiveCode || "")}
+</p>
       </div>
 
       <div class="archive-grid">
