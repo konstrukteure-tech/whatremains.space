@@ -1,14 +1,22 @@
 import { getArchive, saveArchive } from "./storage.js";
-
+function generateArchiveCode() {
+  const chars = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
+  let result = "WR-";
+  for (let i = 0; i < 6; i++) {
+    result += chars[Math.floor(Math.random() * chars.length)];
+  }
+  return result;
+}
 function createArchivePayload(formData) {
   const language = document.documentElement.lang || "de";
 
-  return {
-    id: crypto.randomUUID(),
-    createdAt: new Date().toISOString(),
-    updatedAt: new Date().toISOString(),
-    language,
-    profile: {
+return {
+  id: crypto.randomUUID(),
+  archiveCode: generateArchiveCode(),
+  createdAt: new Date().toISOString(),
+  updatedAt: new Date().toISOString(),
+  language,
+  profile: {
       displayName: formData.name?.trim() || "",
       mode: formData.mode || "free"
     },
