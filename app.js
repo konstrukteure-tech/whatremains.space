@@ -15,8 +15,7 @@ return {
   archiveCode: generateArchiveCode(),
   createdAt: new Date().toISOString(),
   updatedAt: new Date().toISOString(),
-  language,
-  profile: {
+  language,F
       displayName: formData.name?.trim() || "",
       mode: formData.mode || "free"
     },
@@ -27,7 +26,7 @@ return {
     chapters: [
       {
         id: "chapter-1",
-        title: "Kapitel 1",
+        title: "",
         type: formData.mode || "free",
         entries: formData.firstEntry?.trim()
           ? [
