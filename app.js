@@ -512,16 +512,22 @@ function renderArchivePage() {
     renderArchivePage();
   });
 
-  chapterSwitchButtons.forEach((button) => {
-    button.addEventListener("click", () => {
-      const updated = getArchive();
-      if (!updated) return;
+chapterSwitchButtons.forEach((button) => {
+  button.addEventListener("click", () => {
+    const updated = getArchive();
+    if (!updated) return;
 
-      updated.activeChapterId = button.dataset.chapterId;
-      saveArchive(updated);
-      renderArchivePage();
-    });
+    updated.activeChapterId = button.dataset.chapterId;
+    saveArchive(updated);
+
+    const details = document.getElementById("chapterListDetails");
+    if (details) {
+      details.open = false;
+    }
+
+    renderArchivePage();
   });
+});
 }
 
 document.addEventListener("DOMContentLoaded", () => {
