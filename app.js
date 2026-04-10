@@ -54,16 +54,41 @@ function handleStartPage() {
     const mode = form.querySelector("[name='mode']")?.value || "free";
     const firstEntry = form.querySelector("[name='firstEntry']")?.value || "";
 
-    const payload = createArchivePayload({ name, mode, firstEntry });
-    const ok = saveArchive(payload);
+function createArchivePayload(formData) {
+  const language = document.documentElement.lang || "de";
 
-    if (!ok) {
-      alert("Das Archiv konnte lokal nicht gespeichert werden.");
-      return;
-    }
-
-    window.location.href = "archiv.html";
-  });
+  return {
+    id: crypto.randomUUID(),
+    archiveCode: generateArchiveCode(),
+    createdAt: new Date().toISOString(),
+    updatedAt: new Date().toISOString(),
+    language,
+    profile: {
+      displayName: formData.name?.trim() || "",
+      mode: formData.mode || "free"
+    },
+    archive: {
+      title: formData.name?.trim() || "Mein Lebensarchiv",
+      firstEntry: formData.firstEntry?.trim() || ""
+    },
+    chapters: [
+      {
+        id: "chapter-1",
+        title: "",
+        type: formData.mode || "free",
+        entries: formData.firstEntry?.trim()
+          ? [
+              {
+                id: crypto.randomUUID(),
+                createdAt: new Date().toISOString(),
+                kind: "text",
+                content: formData.firstEntry.trim()
+              }
+            ]
+          : []
+      }
+    ]
+  };
 }
 
 function renderArchivePage() {
@@ -152,10 +177,9 @@ const rightBoxContent = isGuided
 
       <div class="archive-grid">
         <article class="archive-card">
-          <div class="eyebrow">Kapitel 1</div>
-          <div style="display:flex; align-items:center; gap:12px;">
-<div style="display:flex; justify-content:space-between; align-items:center;">
-  
+          <div class="eyebrow"></div>
+
+<div style="display:flex; justify-content:space-between; align-items:flex-end; gap:16px;">
   <h2 style="margin:0;">Der Anfang</h2>
 
   <input
@@ -163,20 +187,22 @@ const rightBoxContent = isGuided
     type="text"
     placeholder="Kapitel benennen …"
     style="
-      max-width: 45%;
+      width: 280px;
+      max-width: 42%;
       text-align: right;
       background: none;
       border: none;
-      border-bottom: 1px solid rgba(255,255,255,0.2);
-      color: rgba(241,238,232,0.8);
-      font-size: 0.9rem;
+      border-bottom: 1px solid rgba(255,255,255,0.18);
+      color: rgba(241,238,232,0.78);
+      font-size: 0.95rem;
       outline: none;
       padding: 2px 4px;
+      font-family: inherit;
     "
   />
+</div>
 
-</div>
-</div>
+
           <p class="archive-copy">
             ${firstEntry ? "Dein erster Eintrag ist bereits gespeichert." : "Hier beginnt dein Archiv. Du kannst frei schreiben oder Schritt für Schritt geführt werden."}
           </p>
