@@ -134,7 +134,103 @@ function formatChapterList(data) {
     </div>
   `;
 }
+function renderGuidedPromptsAccordion() {
+  const sections = [
+    {
+      id: "identity",
+      title: "Identität",
+      prompts: [
+        "Wer bist du – unabhängig von Rollen und Erwartungen?",
+        "Was macht dich im Kern aus?",
+        "Wofür stehst du?",
+        "Was war dir immer wichtig?",
+        "Was hat dich innerlich getragen?",
+        "Wie würdest du dich selbst beschreiben?"
+      ]
+    },
+    {
+      id: "life",
+      title: "Leben",
+      prompts: [
+        "Welche Momente haben dich geprägt?",
+        "Was waren Wendepunkte in deinem Leben?",
+        "Worauf bist du stolz?",
+        "Was hat dich herausgefordert?",
+        "Was würdest du heute anders sehen?",
+        "Welche Erfahrungen haben dich verändert?"
+      ]
+    },
+    {
+      id: "unsaid",
+      title: "Ungesagtes",
+      prompts: [
+        "Was wurde nie gesagt?",
+        "Wem wolltest du etwas sagen, hast es aber nie getan?",
+        "Gibt es etwas, das du loslassen möchtest?",
+        "Gibt es etwas, das dich bis heute begleitet?",
+        "Was hättest du gerne früher ausgesprochen?",
+        "Gibt es etwas, das offen geblieben ist?"
+      ]
+    },
+    {
+      id: "legacy",
+      title: "Vermächtnis",
+      prompts: [
+        "Was soll von dir bleiben?",
+        "Was sollen andere über dich wissen?",
+        "Welche Botschaft möchtest du hinterlassen?",
+        "Was möchtest du weitergeben?",
+        "Woran sollen sich andere erinnern?",
+        "Was ist dir wirklich wichtig gewesen?"
+      ]
+    }
+  ];
 
+  return `
+    <div style="display:grid; gap:10px; margin-top:18px;">
+      ${sections
+        .map(
+          (section) => `
+            <details
+              style="
+                border:1px solid rgba(255,255,255,0.10);
+                border-radius:14px;
+                background:rgba(0,0,0,0.10);
+                padding:0;
+                overflow:hidden;
+              "
+            >
+              <summary
+                style="
+                  list-style:none;
+                  cursor:pointer;
+                  padding:12px 14px;
+                  font:inherit;
+                  color:var(--text);
+                  outline:none;
+                "
+              >
+                ${escapeHtml(section.title)}
+              </summary>
+
+              <div style="padding:0 14px 14px; display:grid; gap:8px;">
+                ${section.prompts
+                  .map(
+                    (prompt) => `
+                      <div style="color:var(--muted); line-height:1.4;">
+                        ${escapeHtml(prompt)}
+                      </div>
+                    `
+                  )
+                  .join("")}
+              </div>
+            </details>
+          `
+        )
+        .join("")}
+    </div>
+  `;
+}
 function renderArchivePage() {
   const root = document.querySelector("[data-archive-root]");
   if (!root) return;
@@ -171,17 +267,7 @@ function renderArchivePage() {
         Du kannst dich an einzelnen Impulsen orientieren oder frei formulieren. Die Führung bleibt eine Hilfe, keine Vorgabe.
       </p>
 
-      <div style="display:grid; gap:10px; margin-top:18px;">
-        <div style="padding:12px 14px; border:1px solid rgba(255,255,255,0.10); border-radius:14px;">
-          Wer bist du – und was sollte von dir bleiben?
-        </div>
-        <div style="padding:12px 14px; border:1px solid rgba(255,255,255,0.10); border-radius:14px;">
-          Was wurde nie gesagt?
-        </div>
-        <div style="padding:12px 14px; border:1px solid rgba(255,255,255,0.10); border-radius:14px;">
-          Für wen ist diese Botschaft bestimmt?
-        </div>
-      </div>
+     ${renderGuidedPromptsAccordion()}
 
       <p class="archive-copy" style="margin-top:18px;">
         Aktuelles Kapitel: ${escapeHtml(currentChapterTitle)}
@@ -404,7 +490,90 @@ function formatDate(value) {
     return "";
   }
 }
+function renderGuidedPromptsAccordion() {
+  const sections = [
+    {
+      id: "identity",
+      title: "Identität",
+      prompts: [
+        "Wer bist du – unabhängig von Rollen und Erwartungen?",
+        "Was macht dich im Kern aus?",
+        "Wofür stehst du?",
+        "Was war dir immer wichtig?",
+        "Was hat dich innerlich getragen?",
+        "Wie würdest du dich selbst beschreiben?"
+      ]
+    },
+    {
+      id: "life",
+      title: "Leben",
+      prompts: [
+        "Welche Momente haben dich geprägt?",
+        "Was waren Wendepunkte in deinem Leben?",
+        "Worauf bist du stolz?",
+        "Was hat dich herausgefordert?",
+        "Was würdest du heute anders sehen?",
+        "Welche Erfahrungen haben dich verändert?"
+      ]
+    },
+    {
+      id: "unsaid",
+      title: "Ungesagtes",
+      prompts: [
+        "Was wurde nie gesagt?",
+        "Wem wolltest du etwas sagen, hast es aber nie getan?",
+        "Gibt es etwas, das du loslassen möchtest?",
+        "Gibt es etwas, das dich bis heute begleitet?",
+        "Was hättest du gerne früher ausgesprochen?",
+        "Gibt es etwas, das offen geblieben ist?"
+      ]
+    },
+    {
+      id: "legacy",
+      title: "Vermächtnis",
+      prompts: [
+        "Was soll von dir bleiben?",
+        "Was sollen andere über dich wissen?",
+        "Welche Botschaft möchtest du hinterlassen?",
+        "Was möchtest du weitergeben?",
+        "Woran sollen sich andere erinnern?",
+        "Was ist dir wirklich wichtig gewesen?"
+      ]
+    }
+  ];
 
+  return `
+    <div style="display:grid; gap:10px; margin-top:18px;">
+      ${sections.map(section => `
+        <details style="
+          border:1px solid rgba(255,255,255,0.10);
+          border-radius:14px;
+          background:rgba(0,0,0,0.10);
+          overflow:hidden;
+        ">
+          <summary style="
+            list-style:none;
+            cursor:pointer;
+            padding:12px 14px;
+            font:inherit;
+            color:var(--text);
+            outline:none;
+          ">
+            ${escapeHtml(section.title)}
+          </summary>
+
+          <div style="padding:0 14px 14px; display:grid; gap:8px;">
+            ${section.prompts.map(prompt => `
+              <div style="color:var(--muted); line-height:1.4;">
+                ${escapeHtml(prompt)}
+              </div>
+            `).join("")}
+          </div>
+        </details>
+      `).join("")}
+    </div>
+  `;
+}
 document.addEventListener("DOMContentLoaded", () => {
   handleStartPage();
   renderArchivePage();
