@@ -94,27 +94,22 @@ function renderArchivePage() {
       <div class="archive-head">
         <div class="eyebrow">Archiv</div>
         <h1>${escapeHtml(displayName)}</h1>
-       <p class="archive-meta">
-  ${escapeHtml(modeLabel)} · erstellt ${formatDate(data.createdAt)} · Code 
-  <span id="archiveCode">${escapeHtml(data.archiveCode || "")}</span>
+      <p class="archive-meta">
+  ${escapeHtml(modeLabel)} · erstellt ${formatDate(data.createdAt)} · Code <span id="archiveCode">${escapeHtml(data.archiveCode || "")}</span>
 </p>
 
 <div style="margin-top:6px;">
-  <button id="copyCodeBtn" style="
-    font-size:0.8rem;
-    background:none;
-    border:1px solid rgba(255,255,255,0.2);
-    color:rgba(241,238,232,0.7);
-    padding:4px 8px;
-    border-radius:6px;
-    cursor:pointer;
-  ">
+  <button
+    id="copyCodeBtn"
+    type="button"
+    style="font-size:0.8rem; background:none; border:1px solid rgba(255,255,255,0.2); color:rgba(241,238,232,0.7); padding:4px 8px; border-radius:6px; cursor:pointer;"
+  >
     Code kopieren
   </button>
 </div>
 
-<p style="margin-top:6px; font-size:0.85rem; color:rgba(241,238,232,0.6);">
-  Bitte notiere deinen Archivcode sicher. Ohne Code kein Zugriff mehr möglich.
+<p style="margin-top:8px; font-size:0.85rem; color:rgba(241,238,232,0.6);">
+  Bitte notiere deinen Archivcode. Zugriff ohne Code ist nicht möglich.
 </p>
       </div>
 
@@ -150,7 +145,25 @@ function renderArchivePage() {
 
   const saveBtn = document.getElementById("saveEntryBtn");
   const textArea = document.getElementById("chapterEntry");
+const copyCodeBtn = document.getElementById("copyCodeBtn");
+const archiveCode = document.getElementById("archiveCode");
 
+copyCodeBtn?.addEventListener("click", async () => {
+  if (!archiveCode) return;
+
+  try {
+    await navigator.clipboard.writeText(archiveCode.textContent || "");
+    copyCodeBtn.textContent = "Kopiert";
+    setTimeout(() => {
+      copyCodeBtn.textContent = "Code kopieren";
+    }, 1200);
+  } catch {
+    copyCodeBtn.textContent = "Nicht möglich";
+    setTimeout(() => {
+      copyCodeBtn.textContent = "Code kopieren";
+    }, 1200);
+  }
+});
   saveBtn?.addEventListener("click", () => {
     const updated = getArchive();
     if (!updated) return;
