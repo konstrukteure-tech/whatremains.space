@@ -99,7 +99,7 @@ function renderArchivePage() {
 </p>
 
 <p style="margin-top:6px; font-size:0.85rem; color:rgba(241,238,232,0.6);">
-  Bitte notiere deinen Archivcode sicher.
+  Bitte notiere deinen Archivcode sicher. Ohne Code kein Zugriff mehr möglich.
 </p>
       </div>
 
