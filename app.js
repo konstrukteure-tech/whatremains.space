@@ -94,9 +94,24 @@ function renderArchivePage() {
       <div class="archive-head">
         <div class="eyebrow">Archiv</div>
         <h1>${escapeHtml(displayName)}</h1>
-        <p class="archive-meta">
-  ${escapeHtml(modeLabel)} · erstellt ${formatDate(data.createdAt)} · Code ${escapeHtml(data.archiveCode || "")}
+       <p class="archive-meta">
+  ${escapeHtml(modeLabel)} · erstellt ${formatDate(data.createdAt)} · Code 
+  <span id="archiveCode">${escapeHtml(data.archiveCode || "")}</span>
 </p>
+
+<div style="margin-top:6px;">
+  <button id="copyCodeBtn" style="
+    font-size:0.8rem;
+    background:none;
+    border:1px solid rgba(255,255,255,0.2);
+    color:rgba(241,238,232,0.7);
+    padding:4px 8px;
+    border-radius:6px;
+    cursor:pointer;
+  ">
+    Code kopieren
+  </button>
+</div>
 
 <p style="margin-top:6px; font-size:0.85rem; color:rgba(241,238,232,0.6);">
   Bitte notiere deinen Archivcode sicher. Ohne Code kein Zugriff mehr möglich.
