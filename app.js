@@ -84,10 +84,11 @@ function renderArchivePage() {
     return;
   }
 
-  const displayName = data.profile?.displayName || "Mein Archiv";
-  const firstEntry = data.archive?.firstEntry || "";
-  const modeLabel =
-    data.profile?.mode === "guided" ? "Geführter Beginn" : "Freier Beginn";
+const displayName = data.profile?.displayName || "Mein Archiv";
+const firstEntry = data.archive?.firstEntry || "";
+const modeLabel =
+  data.profile?.mode === "guided" ? "Geführter Beginn" : "Freier Beginn";
+const activeChapter = data.chapters?.[0] || { title: "Der Anfang" };
 const isGuided = data.profile?.mode === "guided";
 const currentChapterTitle = activeChapter?.title || "Der Anfang";
 
