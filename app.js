@@ -17,6 +17,7 @@ function createArchivePayload(formData) {
     archiveCode: generateArchiveCode(),
     createdAt: new Date().toISOString(),
     updatedAt: new Date().toISOString(),
+    activeChapterId: "chapter-1",
     language,
     profile: {
       displayName: formData.name?.trim() || "",
@@ -29,7 +30,7 @@ function createArchivePayload(formData) {
     chapters: [
       {
         id: "chapter-1",
-        title: "",
+        title: "Der Anfang",
         type: formData.mode || "free",
         entries: formData.firstEntry?.trim()
           ? [
@@ -69,6 +70,71 @@ function handleStartPage() {
   });
 }
 
+function getActiveChapter(data) {
+  if (!Array.isArray(data.chapters) || data.chapters.length === 0) {
+    data.chapters = [
+      {
+        id: "chapter-1",
+        title: "Der Anfang",
+        type: data.profile?.mode || "free",
+        entries: []
+      }
+    ];
+    data.activeChapterId = "chapter-1";
+    saveArchive(data);
+  }
+
+  const activeId = data.activeChapterId || data.chapters[0].id;
+  return (
+    data.chapters.find((chapter) => chapter.id === activeId) || data.chapters[0]
+  );
+}
+
+function getChapterContent(chapter) {
+  return chapter?.entries?.[0]?.content || "";
+}
+
+function getDefaultChapterTitle(data) {
+  const nextNumber = (data.chapters?.length || 0) + 1;
+  return `Kapitel ${nextNumber}`;
+}
+
+function formatChapterList(data) {
+  if (!Array.isArray(data.chapters) || data.chapters.length <= 1) return "";
+
+  return `
+    <div style="margin-top:18px;">
+      <div class="eyebrow">Vorhandene Kapitel</div>
+      <div style="display:grid; gap:8px; margin-top:10px;">
+        ${data.chapters
+          .map((chapter) => {
+            const isActive = chapter.id === data.activeChapterId;
+            return `
+              <button
+                type="button"
+                class="chapter-switch"
+                data-chapter-id="${escapeHtml(chapter.id)}"
+                style="
+                  text-align:left;
+                  font:inherit;
+                  color:var(--text);
+                  background:${isActive ? "rgba(195,154,91,0.16)" : "rgba(0,0,0,0.14)"};
+                  border:1px solid rgba(255,255,255,0.10);
+                  border-radius:12px;
+                  padding:10px 12px;
+                  cursor:pointer;
+                "
+              >
+                ${escapeHtml(chapter.title || "Unbenannt")}
+              </button>
+            `;
+          })
+          .join("")}
+      </div>
+    </div>
+  `;
+}
+
 function renderArchivePage() {
   const root = document.querySelector("[data-archive-root]");
   if (!root) return;
@@ -87,12 +153,15 @@ function renderArchivePage() {
   }
 
   const displayName = data.profile?.displayName || "Mein Archiv";
-  const firstEntry = data.archive?.firstEntry || "";
   const modeLabel =
     data.profile?.mode === "guided" ? "Geführter Beginn" : "Freier Beginn";
-  const activeChapter = data.chapters?.[0] || { title: "" };
   const isGuided = data.profile?.mode === "guided";
+
+  const activeChapter = getActiveChapter(data);
+  const activeContent = getChapterContent(activeChapter);
   const currentChapterTitle = activeChapter?.title || "Der Anfang";
+
+  const chapterListHtml = formatChapterList(data);
 
   const rightBoxContent = isGuided
     ? `
@@ -117,6 +186,13 @@ function renderArchivePage() {
       <p class="archive-copy" style="margin-top:18px;">
         Aktuelles Kapitel: ${escapeHtml(currentChapterTitle)}
       </p>
+
+      <div class="actions" style="margin-top:16px;">
+        <button class="btn btn-primary" id="saveAsChapterBtn" type="button">Als Kapitel speichern</button>
+        <button class="btn btn-primary" id="newChapterBtn" type="button">Neues Kapitel</button>
+      </div>
+
+      ${chapterListHtml}
     `
     : `
       <div class="eyebrow">Struktur</div>
@@ -128,6 +204,13 @@ function renderArchivePage() {
       <p class="archive-copy" style="margin-top:18px;">
         Aktuelles Kapitel: ${escapeHtml(currentChapterTitle)}
       </p>
+
+      <div class="actions" style="margin-top:16px;">
+        <button class="btn btn-primary" id="saveAsChapterBtn" type="button">Als Kapitel speichern</button>
+        <button class="btn btn-primary" id="newChapterBtn" type="button">Neues Kapitel</button>
+      </div>
+
+      ${chapterListHtml}
     `;
 
   root.innerHTML = `
@@ -140,7 +223,11 @@ function renderArchivePage() {
           ${escapeHtml(modeLabel)} · erstellt ${formatDate(data.createdAt)} · Code <span id="archiveCode">${escapeHtml(data.archiveCode || "")}</span>
         </p>
 
-        <div style="margin-top:6px;">
+        <p style="margin-top:8px; font-size:0.85rem; color:rgba(241,238,232,0.6);">
+          Bitte notiere deinen Archivcode. Kein Zugriff ohne Code.
+        </p>
+
+        <div style="margin-top:8px;">
           <button
             id="copyCodeBtn"
             type="button"
@@ -149,46 +236,21 @@ function renderArchivePage() {
             Code kopieren
           </button>
         </div>
-
-        <p style="margin-top:8px; font-size:0.85rem; color:rgba(241,238,232,0.6);">
-          Bitte notiere deinen Archivcode. Kein Zugriff ohne Code.
-        </p>
       </div>
 
       <div class="archive-grid">
         <article class="archive-card">
           <div class="eyebrow"></div>
 
-          <div style="display:flex; justify-content:space-between; align-items:flex-end; gap:16px;">
-            <h2 style="margin:0;">Der Anfang</h2>
-
-            <input
-              id="chapterTitle"
-              type="text"
-              placeholder="Kapitel benennen …"
-              style="
-                width: 280px;
-                max-width: 42%;
-                text-align: right;
-                background: none;
-                border: none;
-                border-bottom: 1px solid rgba(255,255,255,0.18);
-                color: rgba(241,238,232,0.78);
-                font-size: 0.95rem;
-                outline: none;
-                padding: 2px 4px;
-                font-family: inherit;
-              "
-            />
-          </div>
+          <h2 style="margin:0 0 8px;">Der Anfang</h2>
 
           <p class="archive-copy">
-            ${firstEntry ? "Dein erster Eintrag ist bereits gespeichert." : "Hier beginnt dein Archiv. Du kannst frei schreiben oder Schritt für Schritt geführt werden."}
+            ${activeContent ? "Dieses Kapitel enthält bereits einen gespeicherten Eintrag." : "Hier beginnt dein Archiv. Du kannst frei schreiben oder Schritt für Schritt geführt werden."}
           </p>
 
           <label class="field">
             <span class="field-label">Dein Eintrag</span>
-            <textarea id="chapterEntry" placeholder="Schreibe hier weiter ...">${escapeHtml(firstEntry)}</textarea>
+            <textarea id="chapterEntry" placeholder="Schreibe hier weiter ...">${escapeHtml(activeContent)}</textarea>
           </label>
 
           <div class="actions">
@@ -204,14 +266,12 @@ function renderArchivePage() {
   `;
 
   const saveBtn = document.getElementById("saveEntryBtn");
-  const textArea = document.getElementById("chapterEntry");
   const copyCodeBtn = document.getElementById("copyCodeBtn");
   const archiveCode = document.getElementById("archiveCode");
-  const chapterTitleInput = document.getElementById("chapterTitle");
-
-  if (chapterTitleInput) {
-    chapterTitleInput.value = activeChapter?.title || "";
-  }
+  const saveAsChapterBtn = document.getElementById("saveAsChapterBtn");
+  const newChapterBtn = document.getElementById("newChapterBtn");
+  const chapterSwitchButtons = document.querySelectorAll(".chapter-switch");
+  const textArea = document.getElementById("chapterEntry");
 
   copyCodeBtn?.addEventListener("click", async () => {
     if (!archiveCode) return;
@@ -234,13 +294,12 @@ function renderArchivePage() {
     const updated = getArchive();
     if (!updated) return;
 
+    const active = getActiveChapter(updated);
     const content = textArea.value.trim();
-    const chapterTitle = chapterTitleInput?.value.trim() || "";
 
     updated.updatedAt = new Date().toISOString();
     updated.archive.firstEntry = content;
-    updated.chapters[0].title = chapterTitle;
-    updated.chapters[0].entries = content
+    active.entries = content
       ? [
           {
             id: crypto.randomUUID(),
@@ -256,6 +315,72 @@ function renderArchivePage() {
     setTimeout(() => {
       saveBtn.textContent = "Speichern";
     }, 1200);
+  });
+
+  saveAsChapterBtn?.addEventListener("click", () => {
+    const updated = getArchive();
+    if (!updated) return;
+
+    const active = getActiveChapter(updated);
+    const content = textArea.value.trim();
+
+    const enteredTitle = window.prompt("Kapitel benennen:");
+    const finalTitle = enteredTitle?.trim() || getDefaultChapterTitle(updated);
+
+    updated.updatedAt = new Date().toISOString();
+    active.title = finalTitle;
+    active.entries = content
+      ? [
+          {
+            id: crypto.randomUUID(),
+            createdAt: new Date().toISOString(),
+            kind: "text",
+            content
+          }
+        ]
+      : [];
+
+    if (updated.activeChapterId === updated.chapters[0]?.id) {
+      updated.archive.firstEntry = content;
+    }
+
+    saveArchive(updated);
+    renderArchivePage();
+  });
+
+  newChapterBtn?.addEventListener("click", () => {
+    const updated = getArchive();
+    if (!updated) return;
+
+    const newIndex = (updated.chapters?.length || 0) + 1;
+    const newChapter = {
+      id: crypto.randomUUID(),
+      title: `Kapitel ${newIndex}`,
+      type: updated.profile?.mode || "free",
+      entries: []
+    };
+
+    if (!Array.isArray(updated.chapters)) {
+      updated.chapters = [];
+    }
+
+    updated.chapters.push(newChapter);
+    updated.activeChapterId = newChapter.id;
+    updated.updatedAt = new Date().toISOString();
+
+    saveArchive(updated);
+    renderArchivePage();
+  });
+
+  chapterSwitchButtons.forEach((button) => {
+    button.addEventListener("click", () => {
+      const updated = getArchive();
+      if (!updated) return;
+
+      updated.activeChapterId = button.dataset.chapterId;
+      saveArchive(updated);
+      renderArchivePage();
+    });
   });
 }
 
