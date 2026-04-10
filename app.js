@@ -1,4 +1,5 @@
 import { getArchive, saveArchive } from "./storage.js";
+
 function generateArchiveCode() {
   const chars = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
   let result = "WR-";
@@ -7,52 +8,6 @@ function generateArchiveCode() {
   }
   return result;
 }
-function createArchivePayload(formData) {
-  const language = document.documentElement.lang || "de";
-
-return {
-  id: crypto.randomUUID(),
-  archiveCode: generateArchiveCode(),
-  createdAt: new Date().toISOString(),
-  updatedAt: new Date().toISOString(),
-  language,F
-      displayName: formData.name?.trim() || "",
-      mode: formData.mode || "free"
-    },
-    archive: {
-      title: formData.name?.trim() || "Mein Lebensarchiv",
-      firstEntry: formData.firstEntry?.trim() || ""
-    },
-    chapters: [
-      {
-        id: "chapter-1",
-        title: "",
-        type: formData.mode || "free",
-        entries: formData.firstEntry?.trim()
-          ? [
-              {
-                id: crypto.randomUUID(),
-                createdAt: new Date().toISOString(),
-                kind: "text",
-                content: formData.firstEntry.trim()
-              }
-            ]
-          : []
-      }
-    ]
-  };
-}
-
-function handleStartPage() {
-  const form = document.querySelector("[data-start-form]");
-  if (!form) return;
-
-  form.addEventListener("submit", (event) => {
-    event.preventDefault();
-
-    const name = form.querySelector("[name='displayName']")?.value || "";
-    const mode = form.querySelector("[name='mode']")?.value || "free";
-    const firstEntry = form.querySelector("[name='firstEntry']")?.value || "";
 
 function createArchivePayload(formData) {
   const language = document.documentElement.lang || "de";
@@ -91,6 +46,29 @@ function createArchivePayload(formData) {
   };
 }
 
+function handleStartPage() {
+  const form = document.querySelector("[data-start-form]");
+  if (!form) return;
+
+  form.addEventListener("submit", (event) => {
+    event.preventDefault();
+
+    const name = form.querySelector("[name='displayName']")?.value || "";
+    const mode = form.querySelector("[name='mode']")?.value || "free";
+    const firstEntry = form.querySelector("[name='firstEntry']")?.value || "";
+
+    const payload = createArchivePayload({ name, mode, firstEntry });
+    const ok = saveArchive(payload);
+
+    if (!ok) {
+      alert("Das Archiv konnte lokal nicht gespeichert werden.");
+      return;
+    }
+
+    window.location.href = "archiv.html";
+  });
+}
+
 function renderArchivePage() {
   const root = document.querySelector("[data-archive-root]");
   if (!root) return;
@@ -108,100 +86,101 @@ function renderArchivePage() {
     return;
   }
 
-const displayName = data.profile?.displayName || "Mein Archiv";
-const firstEntry = data.archive?.firstEntry || "";
-const modeLabel =
-  data.profile?.mode === "guided" ? "Geführter Beginn" : "Freier Beginn";
-const activeChapter = data.chapters?.[0] || { title: "Der Anfang" };
-const isGuided = data.profile?.mode === "guided";
-const currentChapterTitle = activeChapter?.title || "Der Anfang";
+  const displayName = data.profile?.displayName || "Mein Archiv";
+  const firstEntry = data.archive?.firstEntry || "";
+  const modeLabel =
+    data.profile?.mode === "guided" ? "Geführter Beginn" : "Freier Beginn";
+  const activeChapter = data.chapters?.[0] || { title: "" };
+  const isGuided = data.profile?.mode === "guided";
+  const currentChapterTitle = activeChapter?.title || "Der Anfang";
 
-const rightBoxContent = isGuided
-  ? `
-    <div class="eyebrow">Geführte Aufnahme</div>
-    <h2>Nächster Schritt</h2>
-    <p class="archive-copy">
-      Du kannst dich an einzelnen Impulsen orientieren oder frei formulieren. Die Führung bleibt eine Hilfe, keine Vorgabe.
-    </p>
+  const rightBoxContent = isGuided
+    ? `
+      <div class="eyebrow">Geführte Aufnahme</div>
+      <h2>Nächster Schritt</h2>
+      <p class="archive-copy">
+        Du kannst dich an einzelnen Impulsen orientieren oder frei formulieren. Die Führung bleibt eine Hilfe, keine Vorgabe.
+      </p>
 
-    <div style="display:grid; gap:10px; margin-top:18px;">
-      <div style="padding:12px 14px; border:1px solid rgba(255,255,255,0.10); border-radius:14px;">
-        Wer bist du – und was sollte von dir bleiben?
+      <div style="display:grid; gap:10px; margin-top:18px;">
+        <div style="padding:12px 14px; border:1px solid rgba(255,255,255,0.10); border-radius:14px;">
+          Wer bist du – und was sollte von dir bleiben?
+        </div>
+        <div style="padding:12px 14px; border:1px solid rgba(255,255,255,0.10); border-radius:14px;">
+          Was wurde nie gesagt?
+        </div>
+        <div style="padding:12px 14px; border:1px solid rgba(255,255,255,0.10); border-radius:14px;">
+          Für wen ist diese Botschaft bestimmt?
+        </div>
       </div>
-      <div style="padding:12px 14px; border:1px solid rgba(255,255,255,0.10); border-radius:14px;">
-        Was wurde nie gesagt?
-      </div>
-      <div style="padding:12px 14px; border:1px solid rgba(255,255,255,0.10); border-radius:14px;">
-        Für wen ist diese Botschaft bestimmt?
-      </div>
-    </div>
 
-    <p class="archive-copy" style="margin-top:18px;">
-      Aktuelles Kapitel: ${escapeHtml(currentChapterTitle)}
-    </p>
-  `
-  : `
-    <div class="eyebrow">Struktur</div>
-    <h2>Aktueller Stand</h2>
-    <p class="archive-copy">
-      Du arbeitest frei. Weitere Kapitel und Struktur kannst du später ergänzen, ohne den begonnenen Text zu verändern.
-    </p>
+      <p class="archive-copy" style="margin-top:18px;">
+        Aktuelles Kapitel: ${escapeHtml(currentChapterTitle)}
+      </p>
+    `
+    : `
+      <div class="eyebrow">Struktur</div>
+      <h2>Aktueller Stand</h2>
+      <p class="archive-copy">
+        Du arbeitest frei. Weitere Kapitel und Struktur kannst du später ergänzen, ohne den begonnenen Text zu verändern.
+      </p>
 
-    <p class="archive-copy" style="margin-top:18px;">
-      Aktuelles Kapitel: ${escapeHtml(currentChapterTitle)}
-    </p>
-  `;
+      <p class="archive-copy" style="margin-top:18px;">
+        Aktuelles Kapitel: ${escapeHtml(currentChapterTitle)}
+      </p>
+    `;
+
   root.innerHTML = `
     <section class="archive-shell">
       <div class="archive-head">
         <div class="eyebrow">Archiv</div>
         <h1>${escapeHtml(displayName)}</h1>
-      <p class="archive-meta">
-  ${escapeHtml(modeLabel)} · erstellt ${formatDate(data.createdAt)} · Code <span id="archiveCode">${escapeHtml(data.archiveCode || "")}</span>
-</p>
 
-<div style="margin-top:6px;">
-  <button
-    id="copyCodeBtn"
-    type="button"
-    style="font-size:0.8rem; background:none; border:1px solid rgba(255,255,255,0.2); color:rgba(241,238,232,0.7); padding:4px 8px; border-radius:6px; cursor:pointer;"
-  >
-    Code kopieren
-  </button>
-</div>
+        <p class="archive-meta">
+          ${escapeHtml(modeLabel)} · erstellt ${formatDate(data.createdAt)} · Code <span id="archiveCode">${escapeHtml(data.archiveCode || "")}</span>
+        </p>
 
-<p style="margin-top:8px; font-size:0.85rem; color:rgba(241,238,232,0.6);">
-  Bitte notiere deinen Archivcode. Kein Zugriff ohne Code.
-</p>
+        <div style="margin-top:6px;">
+          <button
+            id="copyCodeBtn"
+            type="button"
+            style="font-size:0.8rem; background:none; border:1px solid rgba(255,255,255,0.2); color:rgba(241,238,232,0.7); padding:4px 8px; border-radius:6px; cursor:pointer;"
+          >
+            Code kopieren
+          </button>
+        </div>
+
+        <p style="margin-top:8px; font-size:0.85rem; color:rgba(241,238,232,0.6);">
+          Bitte notiere deinen Archivcode. Kein Zugriff ohne Code.
+        </p>
       </div>
 
       <div class="archive-grid">
         <article class="archive-card">
           <div class="eyebrow"></div>
 
-<div style="display:flex; justify-content:space-between; align-items:flex-end; gap:16px;">
-  <h2 style="margin:0;">Der Anfang</h2>
+          <div style="display:flex; justify-content:space-between; align-items:flex-end; gap:16px;">
+            <h2 style="margin:0;">Der Anfang</h2>
 
-  <input
-    id="chapterTitle"
-    type="text"
-    placeholder="Kapitel benennen …"
-    style="
-      width: 280px;
-      max-width: 42%;
-      text-align: right;
-      background: none;
-      border: none;
-      border-bottom: 1px solid rgba(255,255,255,0.18);
-      color: rgba(241,238,232,0.78);
-      font-size: 0.95rem;
-      outline: none;
-      padding: 2px 4px;
-      font-family: inherit;
-    "
-  />
-</div>
-
+            <input
+              id="chapterTitle"
+              type="text"
+              placeholder="Kapitel benennen …"
+              style="
+                width: 280px;
+                max-width: 42%;
+                text-align: right;
+                background: none;
+                border: none;
+                border-bottom: 1px solid rgba(255,255,255,0.18);
+                color: rgba(241,238,232,0.78);
+                font-size: 0.95rem;
+                outline: none;
+                padding: 2px 4px;
+                font-family: inherit;
+              "
+            />
+          </div>
 
           <p class="archive-copy">
             ${firstEntry ? "Dein erster Eintrag ist bereits gespeichert." : "Hier beginnt dein Archiv. Du kannst frei schreiben oder Schritt für Schritt geführt werden."}
@@ -212,47 +191,55 @@ const rightBoxContent = isGuided
             <textarea id="chapterEntry" placeholder="Schreibe hier weiter ...">${escapeHtml(firstEntry)}</textarea>
           </label>
 
-         <div class="actions">
-  <button class="btn btn-primary" id="saveEntryBtn" type="button">Speichern</button>
-  
-</div>
+          <div class="actions">
+            <button class="btn btn-primary" id="saveEntryBtn" type="button">Speichern</button>
+          </div>
         </article>
 
- <aside class="archive-card">
-  ${rightBoxContent}
-</aside>
+        <aside class="archive-card">
+          ${rightBoxContent}
+        </aside>
       </div>
     </section>
   `;
 
   const saveBtn = document.getElementById("saveEntryBtn");
   const textArea = document.getElementById("chapterEntry");
-const copyCodeBtn = document.getElementById("copyCodeBtn");
-const archiveCode = document.getElementById("archiveCode");
+  const copyCodeBtn = document.getElementById("copyCodeBtn");
+  const archiveCode = document.getElementById("archiveCode");
+  const chapterTitleInput = document.getElementById("chapterTitle");
 
-copyCodeBtn?.addEventListener("click", async () => {
-  if (!archiveCode) return;
-
-  try {
-    await navigator.clipboard.writeText(archiveCode.textContent || "");
-    copyCodeBtn.textContent = "Kopiert";
-    setTimeout(() => {
-      copyCodeBtn.textContent = "Code kopieren";
-    }, 1200);
-  } catch {
-    copyCodeBtn.textContent = "Nicht möglich";
-    setTimeout(() => {
-      copyCodeBtn.textContent = "Code kopieren";
-    }, 1200);
+  if (chapterTitleInput) {
+    chapterTitleInput.value = activeChapter?.title || "";
   }
-});
+
+  copyCodeBtn?.addEventListener("click", async () => {
+    if (!archiveCode) return;
+
+    try {
+      await navigator.clipboard.writeText(archiveCode.textContent || "");
+      copyCodeBtn.textContent = "Kopiert";
+      setTimeout(() => {
+        copyCodeBtn.textContent = "Code kopieren";
+      }, 1200);
+    } catch {
+      copyCodeBtn.textContent = "Nicht möglich";
+      setTimeout(() => {
+        copyCodeBtn.textContent = "Code kopieren";
+      }, 1200);
+    }
+  });
+
   saveBtn?.addEventListener("click", () => {
     const updated = getArchive();
     if (!updated) return;
 
     const content = textArea.value.trim();
+    const chapterTitle = chapterTitleInput?.value.trim() || "";
+
     updated.updatedAt = new Date().toISOString();
     updated.archive.firstEntry = content;
+    updated.chapters[0].title = chapterTitle;
     updated.chapters[0].entries = content
       ? [
           {
