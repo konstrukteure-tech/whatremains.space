@@ -103,38 +103,70 @@ function formatChapterList(data) {
   if (!Array.isArray(data.chapters) || data.chapters.length <= 1) return "";
 
   return `
-    <div style="margin-top:18px;">
-      <div class="eyebrow">Vorhandene Kapitel</div>
-      <div style="display:grid; gap:8px; margin-top:10px;">
-        ${data.chapters
-          .map((chapter) => {
-            const isActive = chapter.id === data.activeChapterId;
-            return `
-              <button
-                type="button"
-                class="chapter-switch"
-                data-chapter-id="${escapeHtml(chapter.id)}"
-                style="
-                  text-align:left;
-                  font:inherit;
-                  color:var(--text);
-                  background:${isActive ? "rgba(195,154,91,0.16)" : "rgba(0,0,0,0.14)"};
-                  border:1px solid rgba(255,255,255,0.10);
-                  border-radius:12px;
-                  padding:10px 12px;
-                  cursor:pointer;
-                "
-              >
-                ${escapeHtml(chapter.title || "Unbenannt")}
-              </button>
-            `;
-          })
-          .join("")}
-      </div>
+    <div style="margin-top:18px; position:relative;">
+      <details id="chapterListDetails">
+        <summary
+          style="
+            list-style:none;
+            cursor:pointer;
+            font:inherit;
+            color:var(--text);
+            border:1px solid rgba(255,255,255,0.10);
+            border-radius:12px;
+            padding:10px 12px;
+            background:rgba(0,0,0,0.10);
+            user-select:none;
+          "
+        >
+          Vorhandene Kapitel
+        </summary>
+
+        <div
+          style="
+            position:absolute;
+            left:0;
+            right:0;
+            bottom:calc(100% + 10px);
+            display:grid;
+            gap:8px;
+            padding:12px;
+            border:1px solid rgba(255,255,255,0.10);
+            border-radius:14px;
+            background:rgba(8, 14, 24, 0.96);
+            backdrop-filter:blur(8px);
+            box-shadow:0 12px 30px rgba(0,0,0,0.28);
+            z-index:20;
+          "
+        >
+          ${data.chapters
+            .map((chapter) => {
+              const isActive = chapter.id === data.activeChapterId;
+              return `
+                <button
+                  type="button"
+                  class="chapter-switch"
+                  data-chapter-id="${escapeHtml(chapter.id)}"
+                  style="
+                    text-align:left;
+                    font:inherit;
+                    color:var(--text);
+                    background:${isActive ? "rgba(195,154,91,0.16)" : "rgba(0,0,0,0.14)"};
+                    border:1px solid rgba(255,255,255,0.10);
+                    border-radius:12px;
+                    padding:10px 12px;
+                    cursor:pointer;
+                  "
+                >
+                  ${escapeHtml(chapter.title || "Unbenannt")}
+                </button>
+              `;
+            })
+            .join("")}
+        </div>
+      </details>
     </div>
   `;
 }
-
 function escapeHtml(value) {
   return String(value)
     .replaceAll("&", "&amp;")
