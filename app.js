@@ -109,7 +109,7 @@ function renderArchivePage() {
 </div>
 
 <p style="margin-top:8px; font-size:0.85rem; color:rgba(241,238,232,0.6);">
-  Bitte notiere deinen Archivcode. Zugriff ohne Code ist nicht möglich.
+  Bitte notiere deinen Archivcode. Kein Zugriff ohne Code.
 </p>
       </div>
 
