@@ -85,7 +85,9 @@ function getActiveChapter(data) {
   }
 
   const activeId = data.activeChapterId || data.chapters[0].id;
-  return data.chapters.find((chapter) => chapter.id === activeId) || data.chapters[0];
+  return (
+    data.chapters.find((chapter) => chapter.id === activeId) || data.chapters[0]
+  );
 }
 
 function getChapterContent(chapter) {
