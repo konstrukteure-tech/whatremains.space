@@ -88,7 +88,44 @@ function renderArchivePage() {
   const firstEntry = data.archive?.firstEntry || "";
   const modeLabel =
     data.profile?.mode === "guided" ? "Geführter Beginn" : "Freier Beginn";
+const isGuided = data.profile?.mode === "guided";
+const currentChapterTitle = activeChapter?.title || "Der Anfang";
 
+const rightBoxContent = isGuided
+  ? `
+    <div class="eyebrow">Geführte Aufnahme</div>
+    <h2>Nächster Schritt</h2>
+    <p class="archive-copy">
+      Du kannst dich an einzelnen Impulsen orientieren oder frei formulieren. Die Führung bleibt eine Hilfe, keine Vorgabe.
+    </p>
+
+    <div style="display:grid; gap:10px; margin-top:18px;">
+      <div style="padding:12px 14px; border:1px solid rgba(255,255,255,0.10); border-radius:14px;">
+        Wer bist du – und was sollte von dir bleiben?
+      </div>
+      <div style="padding:12px 14px; border:1px solid rgba(255,255,255,0.10); border-radius:14px;">
+        Was wurde nie gesagt?
+      </div>
+      <div style="padding:12px 14px; border:1px solid rgba(255,255,255,0.10); border-radius:14px;">
+        Für wen ist diese Botschaft bestimmt?
+      </div>
+    </div>
+
+    <p class="archive-copy" style="margin-top:18px;">
+      Aktuelles Kapitel: ${escapeHtml(currentChapterTitle)}
+    </p>
+  `
+  : `
+    <div class="eyebrow">Struktur</div>
+    <h2>Aktueller Stand</h2>
+    <p class="archive-copy">
+      Du arbeitest frei. Weitere Kapitel und Struktur kannst du später ergänzen, ohne den begonnenen Text zu verändern.
+    </p>
+
+    <p class="archive-copy" style="margin-top:18px;">
+      Aktuelles Kapitel: ${escapeHtml(currentChapterTitle)}
+    </p>
+  `;
   root.innerHTML = `
     <section class="archive-shell">
       <div class="archive-head">
@@ -132,13 +169,9 @@ function renderArchivePage() {
 </div>
         </article>
 
-        <aside class="archive-card">
-          <div class="eyebrow">Nächster Schritt</div>
-          <h2>Struktur</h2>
-          <p class="archive-copy">
-            Als Nächstes bauen wir Kapitel, Audio, Zugriffsregeln und spätere Freigaben auf.
-          </p>
-        </aside>
+ <aside class="archive-card">
+  ${rightBoxContent}
+</aside>
       </div>
     </section>
   `;
