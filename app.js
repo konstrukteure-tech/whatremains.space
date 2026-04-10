@@ -155,21 +155,28 @@ const rightBoxContent = isGuided
         <article class="archive-card">
           <div class="eyebrow">Kapitel 1</div>
           <div style="display:flex; align-items:center; gap:12px;">
+<div style="display:flex; justify-content:space-between; align-items:center;">
+  
   <h2 style="margin:0;">Der Anfang</h2>
+
   <input
     id="chapterTitle"
     type="text"
     placeholder="Kapitel benennen …"
     style="
-      background:none;
-      border:none;
-      border-bottom:1px solid rgba(255,255,255,0.2);
-      color:rgba(241,238,232,0.8);
-      font-size:0.95rem;
-      outline:none;
-      padding:2px 4px;
+      max-width: 45%;
+      text-align: right;
+      background: none;
+      border: none;
+      border-bottom: 1px solid rgba(255,255,255,0.2);
+      color: rgba(241,238,232,0.8);
+      font-size: 0.9rem;
+      outline: none;
+      padding: 2px 4px;
     "
   />
+
+</div>
 </div>
           <p class="archive-copy">
             ${firstEntry ? "Dein erster Eintrag ist bereits gespeichert." : "Hier beginnt dein Archiv. Du kannst frei schreiben oder Schritt für Schritt geführt werden."}
