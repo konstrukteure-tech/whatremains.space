@@ -97,6 +97,10 @@ function renderArchivePage() {
         <p class="archive-meta">
   ${escapeHtml(modeLabel)} · erstellt ${formatDate(data.createdAt)} · Code ${escapeHtml(data.archiveCode || "")}
 </p>
+
+<p style="margin-top:6px; font-size:0.85rem; color:rgba(241,238,232,0.6);">
+  Bitte notiere deinen Archivcode sicher.
+</p>
       </div>
 
       <div class="archive-grid">
