@@ -353,7 +353,7 @@ function renderArchivePage() {
        
       </div>
 
- 
+ `;
 
   root.innerHTML = `
     <section class="archive-shell">
