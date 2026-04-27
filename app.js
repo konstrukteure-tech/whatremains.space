@@ -328,8 +328,8 @@ function renderArchivePage() {
  `;
 
   root.innerHTML = `
-    <section class="archive-layout">
-  <div class="archive-main">
+  <section class="archive-layout">
+    <div class="archive-main">
       <div class="archive-head">
         <div class="eyebrow">Archiv</div>
         <h1>${escapeHtml(displayName)}</h1>
@@ -356,7 +356,6 @@ function renderArchivePage() {
       <div class="archive-grid">
         <article class="archive-card">
           <div class="eyebrow"></div>
-
           <h2 style="margin:0 0 8px;">Der Anfang</h2>
 
           <p class="archive-copy">
@@ -365,7 +364,7 @@ function renderArchivePage() {
 
           <label class="field">
             <span class="field-label">Dein Eintrag</span>
-            <textArea id="chapterEntry" placeholder="Schreibe hier weiter ...">${escapeHtml(activeContent)}</textArea>
+            <textarea id="chapterEntry" placeholder="Schreibe hier weiter ...">${escapeHtml(activeContent)}</textarea>
           </label>
 
           <div class="actions">
@@ -374,21 +373,19 @@ function renderArchivePage() {
           </div>
         </article>
 
-       <aside class="archive-card">
-  ${rightBoxContent}
-</aside>
+        <aside class="archive-card">
+          ${rightBoxContent}
+        </aside>
+      </div>
+    </div>
 
-</div>
-
-<aside class="archive-card chapter-side">
-  <div class="eyebrow">Kapitel</div>
-  <h2>Kapitel</h2>
-  ${chapterListHtml}
-</aside>
-
-    </section>
-  `;
-
+    <aside class="archive-card chapter-side">
+      <div class="eyebrow">Kapitel</div>
+      <h2>Kapitel</h2>
+      ${chapterListHtml}
+    </aside>
+  </section>
+`;
   const saveBtn = document.getElementById("saveEntryBtn");
   const copyCodeBtn = document.getElementById("copyCodeBtn");
   const archiveCode = document.getElementById("archiveCode");
