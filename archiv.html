@@ -153,6 +153,52 @@
         grid-template-columns: 1fr;
       }
     }
+        .detached-editor {
+      position: fixed;
+      inset: 0;
+      z-index: 9999;
+      background: rgba(5, 9, 19, 0.92);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 28px;
+    }
+
+    .detached-editor.is-open {
+      display: flex;
+    }
+
+    .detached-box {
+      width: min(1000px, 92vw);
+      height: min(760px, 84vh);
+      background: rgba(8, 14, 24, 0.96);
+      border: 1px solid var(--line);
+      border-radius: 22px;
+      padding: 22px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      resize: both;
+      overflow: auto;
+    }
+
+    .detached-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .detached-title {
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
+
+    #detachedText {
+      flex: 1;
+      min-height: 420px;
+      resize: none;
+    }
   </style>
 </head>
 <body>
@@ -162,7 +208,16 @@
   </div>
 
   <main class="shell" data-archive-root></main>
+  <div class="detached-editor" id="detachedEditor">
+    <div class="detached-box">
+      <div class="detached-head">
+        <div class="detached-title">Schreibfläche abgedockt</div>
+        <button class="btn" type="button" id="closeDetachedEditor">Zurück ins Archiv</button>
+      </div>
 
+      <textarea id="detachedText" placeholder="Schreibe hier weiter ..."></textarea>
+    </div>
+  </div>
   <script type="module" src="./app.js"></script>
 </body>
 </html>
