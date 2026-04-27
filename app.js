@@ -325,10 +325,6 @@ function renderArchivePage() {
   <button class="btn btn-primary" id="newChapterBtn" type="button">Neues Kapitel</button>
 </div>
 
-${chapterListHtml}
-       
-      </div>
-
  `;
 
   root.innerHTML = `
@@ -377,9 +373,15 @@ ${chapterListHtml}
           </div>
         </article>
 
-        <aside class="archive-card">
-          ${rightBoxContent}
-        </aside>
+       <aside class="archive-card">
+  ${rightBoxContent}
+</aside>
+
+<aside class="archive-card">
+  <div class="eyebrow">Kapitel</div>
+  <h2>Kapitel</h2>
+  ${chapterListHtml}
+</aside>
       </div>
     </section>
   `;
