@@ -69,9 +69,21 @@
       backdrop-filter: blur(8px);
     }
 
-    .archive-grid {
+.archive-layout {
   display: grid;
-  grid-template-columns: 1.15fr 0.75fr 0.55fr;
+  grid-template-columns: 1fr 260px;
+  gap: 22px;
+  align-items: stretch;
+}
+
+.archive-main {
+  display: grid;
+  gap: 24px;
+}
+
+.archive-grid {
+  display: grid;
+  grid-template-columns: 1.2fr 0.8fr;
   gap: 22px;
 }
 
@@ -149,10 +161,14 @@
     }
 
     @media (max-width: 900px) {
-      .archive-grid {
-        grid-template-columns: 1fr;
-      }
-    }
+  .archive-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .archive-grid {
+    grid-template-columns: 1fr;
+  }
+}
         .detached-editor {
       position: fixed;
       inset: 0;
