@@ -349,6 +349,7 @@ function renderArchivePage() {
       <div class="actions" style="margin-top:16px;">
         <button class="btn btn-primary" id="saveAsChapterBtn" type="button">Als Kapitel speichern</button>
         <button class="btn btn-primary" id="newChapterBtn" type="button">Neues Kapitel</button>
+        <button class="btn" type="button" data-detach-editor>Schreibfläche abdocken</button>
       </div>
 
       ${chapterListHtml}
@@ -472,7 +473,7 @@ if (detachBtn && textarea && detachedEditor && detachedText && closeDetached) {
     saveArchive(updated);
     saveBtn.textContent = "Gespeichert";
     setTimeout(() => {
-      saveBtn.textContent = "Speichern";
+      saveBtn.textContent = "Zwischenspeichern";
     }, 1200);
   });
 
