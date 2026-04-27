@@ -332,9 +332,9 @@ function renderArchivePage() {
         <button class="btn btn-primary" id="newChapterBtn" type="button">Neues Kapitel</button>
     
             </div>
-    `;
+    
 
-      ${chapterListHtml}
+      
     `
     : `
       <div class="eyebrow">Struktur</div>
