@@ -392,7 +392,7 @@ function renderArchivePage() {
 
           <label class="field">
             <span class="field-label">Dein Eintrag</span>
-            <textarea id="chapterEntry" placeholder="Schreibe hier weiter ...">${escapeHtml(activeContent)}</textarea>
+            <textArea id="chapterEntry" placeholder="Schreibe hier weiter ...">${escapeHtml(activeContent)}</textArea>
           </label>
 
           <div class="actions">
@@ -420,15 +420,15 @@ const detachedEditor = document.getElementById('detachedEditor');
 const detachedText = document.getElementById('detachedText');
 const closeDetached = document.getElementById('closeDetachedEditor');
 
-if (detachBtn && textarea && detachedEditor && detachedText && closeDetached) {
+if (detachBtn && textArea && detachedEditor && detachedText && closeDetached) {
 
   detachBtn.addEventListener('click', () => {
-    detachedText.value = textarea.value;
+    detachedText.value = textArea.value;
     detachedEditor.classList.add('is-open');
   });
 
   closeDetached.addEventListener('click', () => {
-    textarea.value = detachedText.value;
+    textArea.value = detachedText.value;
     detachedEditor.classList.remove('is-open');
   });
 
