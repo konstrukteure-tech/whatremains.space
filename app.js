@@ -352,8 +352,7 @@ function renderArchivePage() {
        
       </div>
 
-      ${chapterListHtml}
-    `;
+ 
 
   root.innerHTML = `
     <section class="archive-shell">
