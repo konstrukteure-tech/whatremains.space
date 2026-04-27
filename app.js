@@ -330,7 +330,7 @@ function renderArchivePage() {
       <div class="actions" style="margin-top:16px;">
         <button class="btn btn-primary" id="saveAsChapterBtn" type="button">Als Kapitel speichern</button>
         <button class="btn btn-primary" id="newChapterBtn" type="button">Neues Kapitel</button>
-        <button class="btn" type="button" data-detach-editor>Schreibfläche abdocken</button>
+    
       </div>
 
       ${chapterListHtml}
@@ -349,7 +349,7 @@ function renderArchivePage() {
       <div class="actions" style="margin-top:16px;">
         <button class="btn btn-primary" id="saveAsChapterBtn" type="button">Als Kapitel speichern</button>
         <button class="btn btn-primary" id="newChapterBtn" type="button">Neues Kapitel</button>
-        <button class="btn" type="button" data-detach-editor>Schreibfläche abdocken</button>
+       
       </div>
 
       ${chapterListHtml}
@@ -397,6 +397,7 @@ function renderArchivePage() {
 
           <div class="actions">
             <button class="btn btn-primary" id="saveEntryBtn" type="button">Zwischenspeichern</button>
+            <button class="btn btn-primary" id="detachEditorBtn" type="button">Schreibfläche abdocken</button>
           </div>
         </article>
 
@@ -414,7 +415,7 @@ function renderArchivePage() {
   const newChapterBtn = document.getElementById("newChapterBtn");
   const chapterSwitchButtons = document.querySelectorAll(".chapter-switch");
   const textArea = document.getElementById("chapterEntry");
-  const detachBtn = document.querySelector('[data-detach-editor]');
+  const detachBtn = document.getElementById("detachEditorBtn");
 const detachedEditor = document.getElementById('detachedEditor');
 const detachedText = document.getElementById('detachedText');
 const closeDetached = document.getElementById('closeDetachedEditor');
