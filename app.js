@@ -328,7 +328,8 @@ function renderArchivePage() {
  `;
 
   root.innerHTML = `
-    <section class="archive-shell">
+    <section class="archive-layout">
+  <div class="archive-main">
       <div class="archive-head">
         <div class="eyebrow">Archiv</div>
         <h1>${escapeHtml(displayName)}</h1>
@@ -377,12 +378,14 @@ function renderArchivePage() {
   ${rightBoxContent}
 </aside>
 
-<aside class="archive-card">
+</div>
+
+<aside class="archive-card chapter-side">
   <div class="eyebrow">Kapitel</div>
   <h2>Kapitel</h2>
   ${chapterListHtml}
 </aside>
-      </div>
+
     </section>
   `;
 
