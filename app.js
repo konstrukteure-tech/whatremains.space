@@ -331,7 +331,8 @@ function renderArchivePage() {
         <button class="btn btn-primary" id="saveAsChapterBtn" type="button">Als Kapitel speichern</button>
         <button class="btn btn-primary" id="newChapterBtn" type="button">Neues Kapitel</button>
     
-      </div>
+            </div>
+    `;
 
       ${chapterListHtml}
     `
