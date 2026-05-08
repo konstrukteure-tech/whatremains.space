@@ -453,7 +453,9 @@ if (audioStartBtn && audioPauseBtn && audioStopBtn && audioPreview) {
         audioStatus.textContent = "Audio gespeichert";
 
 audioPreview.innerHTML = `
-  <<audio controls src="${audioUrl}" style="width:100%; max-width:520px; margin-top:6px;"></audio>audio controls src="${audioUrl}" style="width:100%; margin-top:6px;"></audio>
+  <div style="width:100%; max-width:100%; overflow:hidden;">
+    <audio controls src="${audioUrl}" style="width:100%; max-width:100%; display:block; margin-top:6px;"></audio>
+  </div>
 `;
         if (audioStream) {
           audioStream.getTracks().forEach((track) => track.stop());
@@ -463,7 +465,7 @@ audioPreview.innerHTML = `
         audioStartBtn.hidden = false;
         audioPauseBtn.hidden = true;
         audioStopBtn.hidden = true;
-        audioPauseBtn.textContent = "Audio pausieren";
+        audioPaaudioPauseBtn.textContent = "⏸";
       });
 
       audioRecorder.start();
