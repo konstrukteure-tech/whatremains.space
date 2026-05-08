@@ -467,7 +467,7 @@ audioPreview.innerHTML = `
   display:block;
   background:#2a2f36;
   border-radius:6px;
-  margin-left:-6px;
+  margin-left:-10px;
 "></audio>
 
     <span class="archive-copy" style="
