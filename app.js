@@ -450,11 +450,12 @@ if (audioStartBtn && audioPauseBtn && audioStopBtn && audioPreview) {
         const audioBlob = new Blob(audioChunks, { type: "audio/webm" });
         const audioUrl = URL.createObjectURL(audioBlob);
 
-audioStatus.textContent = "Audio gespeichert";
+audioStatus.textContent = "";
 
 audioPreview.innerHTML = `
-  <div style="margin-top:10px; width:100%;">
-    <audio controls src="${audioUrl}" style="width:100%; max-width:480px; display:block;"></audio>
+  <div style="display:flex; align-items:center; gap:14px; margin-top:12px; width:100%;">
+    <span class="archive-copy" style="min-width:130px; line-height:32px;">Audio gespeichert</span>
+    <audio controls src="${audioUrl}" style="width:360px; max-width:100%; height:32px; display:block;"></audio>
   </div>
 `;
 
