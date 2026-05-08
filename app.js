@@ -453,7 +453,9 @@ if (audioStartBtn && audioPauseBtn && audioStopBtn && audioPreview) {
 audioStatus.textContent = "Audio gespeichert";
 
 audioPreview.innerHTML = `
-  <audio controls src="${audioUrl}" style="width:220px; height:32px;"></audio>
+  <div style="margin-top:10px; width:100%;">
+    <audio controls src="${audioUrl}" style="width:100%; max-width:480px; display:block;"></audio>
+  </div>
 `;
 
         if (audioStream) {
@@ -488,13 +490,18 @@ audioPreview.innerHTML = `
   audioPauseBtn.addEventListener("click", () => {
   if (!audioRecorder) return;
 
- if (audioRecorder.state === "recording") {
+if (audioRecorder.state === "recording") {
   audioRecorder.pause();
   audioPauseBtn.textContent = "▶";
   audioStatus.textContent = "Audio pausiert";
 
   const line = audioPreview.querySelector(".audio-level-line");
-  if (line) line.style.opacity = "0.3";
+  if (line) {
+    line.style.opacity = "0.35";
+    line.querySelectorAll("span").forEach((bar) => {
+      bar.style.animationPlayState = "paused";
+    });
+  }
 
 } else if (audioRecorder.state === "paused") {
   audioRecorder.resume();
@@ -502,7 +509,12 @@ audioPreview.innerHTML = `
   audioStatus.textContent = "Audio läuft …";
 
   const line = audioPreview.querySelector(".audio-level-line");
-  if (line) line.style.opacity = "1";
+  if (line) {
+    line.style.opacity = "1";
+    line.querySelectorAll("span").forEach((bar) => {
+      bar.style.animationPlayState = "running";
+    });
+  }
 }
 });
 
