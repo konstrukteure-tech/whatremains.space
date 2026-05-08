@@ -301,8 +301,8 @@ function renderArchivePage() {
       </p>
 
       <div class="actions" style="margin-top:16px;">
-        <button class="btn btn-primary" id="saveAsChapterBtn" type="button">Als Kapitel speichern</button>
-        <button class="btn btn-primary" id="newChapterBtn" type="button">Neues Kapitel</button>
+        <button class="btn btn-primary" id="saveAsChapterBtn" type="button">Kapitel speichern</button>
+        <button class="btn btn-primary" id="newChapterBtn" type="button">Neu</button>
     
             </div>
     
@@ -453,7 +453,7 @@ if (audioStartBtn && audioPauseBtn && audioStopBtn && audioPreview) {
         audioStatus.textContent = "Audio gespeichert";
 
 audioPreview.innerHTML = `
-  <audio controls src="${audioUrl}" style="width:100%; margin-top:6px;"></audio>
+  <<audio controls src="${audioUrl}" style="width:100%; max-width:520px; margin-top:6px;"></audio>audio controls src="${audioUrl}" style="width:100%; margin-top:6px;"></audio>
 `;
         if (audioStream) {
           audioStream.getTracks().forEach((track) => track.stop());
@@ -473,7 +473,7 @@ audioPreview.innerHTML = "";
       audioPauseBtn.hidden = false;
       audioStopBtn.hidden = false;
 
-      audioPreview.innerHTML = `<p class="archive-copy">Audio läuft ...</p>`;
+     
 
     } catch {
       alert("Mikrofon konnte nicht gestartet werden.");
