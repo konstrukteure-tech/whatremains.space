@@ -453,10 +453,17 @@ if (audioStartBtn && audioPauseBtn && audioStopBtn && audioPreview) {
         audioStatus.textContent = "Audio gespeichert";
 
 audioPreview.innerHTML = `
-  <div style="width:100%; max-width:100%; overflow:hidden;">
-    <audio controls src="${audioUrl}" style="width:100%; max-width:100%; display:block; margin-top:6px;"></audio>
+  <button class="audio-listen-btn" type="button" id="audioListenBtn">Anhören</button>
+  <div id="audioPlayerBox" hidden>
+    <audio controls src="${audioUrl}" style="width:100%; max-width:100%; display:block; margin-top:8px;"></audio>
   </div>
 `;
+        const audioListenBtn = document.getElementById("audioListenBtn");
+const audioPlayerBox = document.getElementById("audioPlayerBox");
+
+audioListenBtn?.addEventListener("click", () => {
+  audioPlayerBox.hidden = !audioPlayerBox.hidden;
+});
         if (audioStream) {
           audioStream.getTracks().forEach((track) => track.stop());
           audioStream = null;
@@ -470,7 +477,11 @@ audioPreview.innerHTML = `
 
       audioRecorder.start();
 audioStatus.textContent = "Audio läuft …";
-audioPreview.innerHTML = "";
+audioPreview.innerHTML = `
+  <div class="audio-level-line" aria-hidden="true">
+    <span></span><span></span><span></span><span></span><span></span>
+  </div>
+`;
       audioStartBtn.hidden = true;
       audioPauseBtn.hidden = false;
       audioStopBtn.hidden = false;
