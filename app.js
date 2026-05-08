@@ -296,9 +296,7 @@ function renderArchivePage() {
 
       ${renderGuidedPromptsAccordion()}
 
-      <p class="archive-copy" style="margin-top:18px;">
-        Aktuelles Kapitel: ${escapeHtml(currentChapterTitle)}
-      </p>
+      
 
       <div class="actions" style="margin-top:16px;">
         <button class="btn btn-primary" id="saveAsChapterBtn" type="button">Kapitel speichern</button>
@@ -316,10 +314,7 @@ function renderArchivePage() {
         Du arbeitest frei. Weitere Kapitel und Struktur kannst du später ergänzen, ohne den begonnenen Text zu verändern.
       </p>
 
-      <p class="archive-copy" style="margin-top:18px;">
-        Aktuelles Kapitel: ${escapeHtml(currentChapterTitle)}
-      </p>
-
+     
       <div class="actions" style="margin-top:16px;">
   <button class="btn btn-primary" id="saveAsChapterBtn" type="button">Als Kapitel speichern</button>
   <button class="btn btn-primary" id="newChapterBtn" type="button">Neues Kapitel</button>
@@ -356,7 +351,7 @@ function renderArchivePage() {
       <div class="archive-grid">
         <article class="archive-card">
           <div class="eyebrow"></div>
-          <h2 style="margin:0 0 8px;">Der Anfang</h2>
+        <h2 style="margin:0 0 8px;">Der Anfang</h2>
 
           <p class="archive-copy">
             ${activeContent ? "Dieses Kapitel enthält bereits einen gespeicherten Eintrag." : "Hier beginnt dein Archiv. Du kannst frei schreiben oder Schritt für Schritt geführt werden."}
@@ -364,7 +359,7 @@ function renderArchivePage() {
 
           <label class="field">
             <span class="field-label">Dein Eintrag</span>
-            <textarea id="chapterEntry" placeholder="Schreibe hier weiter ...">${escapeHtml(activeContent)}</textarea>
+            <textarea id="chapterEntry" placeholder="Schreibe oder erzähle hier weiter ...">${escapeHtml(activeContent)}</textarea>
           </label>
 
 <div class="actions">
