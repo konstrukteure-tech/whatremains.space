@@ -453,17 +453,9 @@ if (audioStartBtn && audioPauseBtn && audioStopBtn && audioPreview) {
         audioStatus.textContent = "Audio gespeichert";
 
 audioPreview.innerHTML = `
-  <button class="audio-listen-btn" type="button" id="audioListenBtn">Anhören</button>
-  <div id="audioPlayerBox" hidden>
-    <audio controls src="${audioUrl}" style="width:100%; max-width:100%; display:block; margin-top:8px;"></audio>
-  </div>
+  <audio controls src="${audioUrl}" style="width:100%; max-width:100%; display:block; margin-top:6px;"></audio>
 `;
-        const audioListenBtn = document.getElementById("audioListenBtn");
-const audioPlayerBox = document.getElementById("audioPlayerBox");
 
-audioListenBtn?.addEventListener("click", () => {
-  audioPlayerBox.hidden = !audioPlayerBox.hidden;
-});
         if (audioStream) {
           audioStream.getTracks().forEach((track) => track.stop());
           audioStream = null;
@@ -474,7 +466,7 @@ audioListenBtn?.addEventListener("click", () => {
         audioStopBtn.hidden = true;
         audioPaaudioPauseBtn.textContent = "⏸";
       });
-
+ 
       audioRecorder.start();
 audioStatus.textContent = "Audio läuft …";
 audioPreview.innerHTML = `
@@ -513,7 +505,7 @@ audioStopBtn.addEventListener("click", () => {
   audioRecorder.stop();
 
   audioPauseBtn.textContent = "⏸";
-  audioStatus.textContent = "Audio wird verarbeitet …";
+ audioStatus.textContent = "Audio beendet";
 });
 
 }
