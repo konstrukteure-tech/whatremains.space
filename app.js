@@ -458,17 +458,17 @@ audioPreview.innerHTML = `
   align-items:flex-end;
   gap:12px;
   margin-top:22px;
-  width:100%;
-  padding-left:10px;
+  width:fit-content;
 ">
 
-    <audio controls src="${audioUrl}" style="
-      width:260px;
-      height:32px;
-      display:block;
-      background:#2a2f36;
-      border-radius:6px;
-    "></audio>
+<audio controls src="${audioUrl}" style="
+  width:260px;
+  height:32px;
+  display:block;
+  background:#2a2f36;
+  border-radius:6px;
+  margin-left:-6px;
+"></audio>
 
     <span class="archive-copy" style="
       line-height:32px;
