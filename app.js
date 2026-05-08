@@ -453,10 +453,29 @@ if (audioStartBtn && audioPauseBtn && audioStopBtn && audioPreview) {
 audioStatus.textContent = "";
 
 audioPreview.innerHTML = `
-<div style="display:flex; align-items:flex-end; justify-content:flex-end; gap:10px; margin-top:14px; width:100%;">
-  <span class="archive-copy" style="line-height:32px;">Audio gespeichert</span>
-  <audio controls src="${audioUrl}" style="width:320px; max-width:100%; height:32px; display:block; filter:brightness(0.75) grayscale(0.3); opacity:0.9;"></audio>
-</div>
+  <div style="
+    display:flex;
+    align-items:center;
+    gap:12px;
+    margin-top:22px;
+    width:100%;
+  ">
+    <span class="archive-copy" style="
+      line-height:32px;
+      white-space:nowrap;
+    ">
+      Audio gespeichert
+    </span>
+
+    <audio controls src="${audioUrl}" style="
+      width:260px;
+      height:32px;
+      display:block;
+      margin-left:0;
+      background:#2a2f36;
+      border-radius:6px;
+    "></audio>
+  </div>
 `;
 
         if (audioStream) {
