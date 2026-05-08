@@ -488,15 +488,22 @@ audioPreview.innerHTML = `
   audioPauseBtn.addEventListener("click", () => {
   if (!audioRecorder) return;
 
-  if (audioRecorder.state === "recording") {
-    audioRecorder.pause();
-    audioPauseBtn.textContent = "▶";
-    audioStatus.textContent = "Audio pausiert";
-  } else if (audioRecorder.state === "paused") {
-    audioRecorder.resume();
-    audioPauseBtn.textContent = "⏸";
-    audioStatus.textContent = "Audio läuft …";
-  }
+ if (audioRecorder.state === "recording") {
+  audioRecorder.pause();
+  audioPauseBtn.textContent = "▶";
+  audioStatus.textContent = "Audio pausiert";
+
+  const line = audioPreview.querySelector(".audio-level-line");
+  if (line) line.style.opacity = "0.3";
+
+} else if (audioRecorder.state === "paused") {
+  audioRecorder.resume();
+  audioPauseBtn.textContent = "⏸";
+  audioStatus.textContent = "Audio läuft …";
+
+  const line = audioPreview.querySelector(".audio-level-line");
+  if (line) line.style.opacity = "1";
+}
 });
 
 audioStopBtn.addEventListener("click", () => {
