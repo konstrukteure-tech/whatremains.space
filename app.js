@@ -375,7 +375,7 @@ function renderArchivePage() {
   <button class="btn btn-audio" id="audioPauseBtn" type="button" title="Pause" hidden>⏸</button>
   <button class="btn btn-audio" id="audioStopBtn" type="button" title="Stop" hidden>■</button>
 </div>
-
+<div id="audioPreview" style="display:flex; align-items:center; gap:10px; margin-left:10px;"></div>
 <div id="audioStatus" style="margin-top:10px; font-size:0.85rem; color:var(--muted);"></div>
 <div id="audioPreview" style="margin-top:10px;"></div>
         </article>
@@ -450,10 +450,10 @@ if (audioStartBtn && audioPauseBtn && audioStopBtn && audioPreview) {
         const audioBlob = new Blob(audioChunks, { type: "audio/webm" });
         const audioUrl = URL.createObjectURL(audioBlob);
 
-        audioStatus.textContent = "Audio gespeichert";
+audioStatus.textContent = "Audio gespeichert";
 
 audioPreview.innerHTML = `
-  <audio controls src="${audioUrl}" style="width:100%; max-width:100%; display:block; margin-top:6px;"></audio>
+  <audio controls src="${audioUrl}" style="width:220px; height:32px;"></audio>
 `;
 
         if (audioStream) {
