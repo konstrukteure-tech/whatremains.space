@@ -367,10 +367,15 @@ function renderArchivePage() {
             <textarea id="chapterEntry" placeholder="Schreibe hier weiter ...">${escapeHtml(activeContent)}</textarea>
           </label>
 
-          <div class="actions">
-            <button class="btn btn-primary" id="saveEntryBtn" type="button">Zwischenspeichern</button>
-            <button class="btn btn-primary" id="detachEditorBtn" type="button">Schreibfläche abdocken</button>
-          </div>
+         <div class="actions">
+  <button class="btn btn-primary" id="saveEntryBtn" type="button">Zwischenspeichern</button>
+  <button class="btn btn-primary" id="detachEditorBtn" type="button">Schreibfläche abdocken</button>
+  <button class="btn btn-primary" id="audioStartBtn" type="button">Audio starten</button>
+  <button class="btn btn-primary" id="audioPauseBtn" type="button" hidden>Audio pausieren</button>
+  <button class="btn btn-primary" id="audioStopBtn" type="button" hidden>Audio beenden</button>
+</div>
+
+<div id="audioPreview" style="margin-top:14px;"></div>
         </article>
 
         <aside class="archive-card">
@@ -397,6 +402,14 @@ function renderArchivePage() {
 const detachedEditor = document.getElementById('detachedEditor');
 const detachedText = document.getElementById('detachedText');
 const closeDetached = document.getElementById('closeDetachedEditor');
+  const audioStartBtn = document.getElementById("audioStartBtn");
+const audioPauseBtn = document.getElementById("audioPauseBtn");
+const audioStopBtn = document.getElementById("audioStopBtn");
+const audioPreview = document.getElementById("audioPreview");
+
+let audioRecorder = null;
+let audioChunks = [];
+let audioStream = null;
 
 if (detachBtn && textArea && detachedEditor && detachedText && closeDetached) {
 
@@ -411,7 +424,85 @@ if (detachBtn && textArea && detachedEditor && detachedText && closeDetached) {
   });
 
 }
+if (audioStartBtn && audioPauseBtn && audioStopBtn && audioPreview) {
 
+  audioStartBtn.addEventListener("click", async () => {
+    if (!navigator.mediaDevices || !window.MediaRecorder) {
+      alert("Audio wird von diesem Browser nicht unterstützt.");
+      return;
+    }
+
+    try {
+      audioStream = await navigator.mediaDevices.getUserMedia({ audio: true });
+      audioChunks = [];
+
+      audioRecorder = new MediaRecorder(audioStream);
+
+      audioRecorder.addEventListener("dataavailable", (event) => {
+        if (event.data.size > 0) {
+          audioChunks.push(event.data);
+        }
+      });
+
+      audioRecorder.addEventListener("stop", () => {
+        const audioBlob = new Blob(audioChunks, { type: "audio/webm" });
+        const audioUrl = URL.createObjectURL(audioBlob);
+
+        audioPreview.innerHTML = `
+          <audio controls src="${audioUrl}" style="width:100%; margin-top:8px;"></audio>
+          <p class="archive-copy" style="margin-top:8px;">Audio bereit.</p>
+        `;
+
+        if (audioStream) {
+          audioStream.getTracks().forEach((track) => track.stop());
+          audioStream = null;
+        }
+
+        audioStartBtn.hidden = false;
+        audioPauseBtn.hidden = true;
+        audioStopBtn.hidden = true;
+        audioPauseBtn.textContent = "Audio pausieren";
+      });
+
+      audioRecorder.start();
+
+      audioStartBtn.hidden = true;
+      audioPauseBtn.hidden = false;
+      audioStopBtn.hidden = false;
+
+      audioPreview.innerHTML = `<p class="archive-copy">Audio läuft ...</p>`;
+
+    } catch {
+      alert("Mikrofon konnte nicht gestartet werden.");
+    }
+  });
+
+  audioPauseBtn.addEventListener("click", () => {
+    if (!audioRecorder) return;
+
+    if (audioRecorder.state === "recording") {
+      audioRecorder.pause();
+      audioPauseBtn.textContent = "Audio fortsetzen";
+      audioPreview.innerHTML = `<p class="archive-copy">Audio pausiert.</p>`;
+      return;
+    }
+
+    if (audioRecorder.state === "paused") {
+      audioRecorder.resume();
+      audioPauseBtn.textContent = "Audio pausieren";
+      audioPreview.innerHTML = `<p class="archive-copy">Audio läuft ...</p>`;
+    }
+  });
+
+  audioStopBtn.addEventListener("click", () => {
+    if (!audioRecorder) return;
+
+    if (audioRecorder.state !== "inactive") {
+      audioRecorder.stop();
+    }
+  });
+
+}
   copyCodeBtn?.addEventListener("click", async () => {
     if (!archiveCode) return;
 
