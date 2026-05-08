@@ -367,12 +367,12 @@ function renderArchivePage() {
             <textarea id="chapterEntry" placeholder="Schreibe hier weiter ...">${escapeHtml(activeContent)}</textarea>
           </label>
 
-         <div class="actions">
+<div class="actions">
   <button class="btn btn-primary" id="saveEntryBtn" type="button">Zwischenspeichern</button>
-  <button class="btn btn-primary" id="detachEditorBtn" type="button">Schreibfläche abdocken</button>
-  <button class="btn btn-primary" id="audioStartBtn" type="button">Audio starten</button>
-  <button class="btn btn-primary" id="audioPauseBtn" type="button" hidden>Audio pausieren</button>
-  <button class="btn btn-primary" id="audioStopBtn" type="button" hidden>Audio beenden</button>
+  <button class="btn btn-primary" id="detachEditorBtn" type="button">Abdocken</button>
+  <button class="btn btn-primary" id="audioStartBtn" type="button" title="Audio starten">●</button>
+  <button class="btn btn-primary" id="audioPauseBtn" type="button" title="Audio pausieren" hidden>⏸</button>
+  <button class="btn btn-primary" id="audioStopBtn" type="button" title="Audio beenden" hidden>■</button>
 </div>
 
 <div id="audioPreview" style="margin-top:14px;"></div>
