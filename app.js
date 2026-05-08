@@ -453,13 +453,14 @@ if (audioStartBtn && audioPauseBtn && audioStopBtn && audioPreview) {
 audioStatus.textContent = "";
 
 audioPreview.innerHTML = `
-  <div style="
-    display:flex;
-    align-items:flex-end;
-    gap:12px;
-    margin-top:22px;
-    width:100%;
-  ">
+<div style="
+  display:flex;
+  align-items:flex-end;
+  gap:12px;
+  margin-top:22px;
+  width:100%;
+  padding-left:6px;
+">
 
     <audio controls src="${audioUrl}" style="
       width:260px;
