@@ -455,26 +455,28 @@ audioStatus.textContent = "";
 audioPreview.innerHTML = `
   <div style="
     display:flex;
-    align-items:center;
+    align-items:flex-end;
     gap:12px;
     margin-top:22px;
     width:100%;
   ">
-    <span class="archive-copy" style="
-      line-height:32px;
-      white-space:nowrap;
-    ">
-      Audio gespeichert
-    </span>
 
     <audio controls src="${audioUrl}" style="
       width:260px;
       height:32px;
       display:block;
-      margin-left:0;
       background:#2a2f36;
       border-radius:6px;
     "></audio>
+
+    <span class="archive-copy" style="
+      line-height:32px;
+      margin-left:auto;
+      white-space:nowrap;
+    ">
+      Audio gespeichert
+    </span>
+
   </div>
 `;
 
