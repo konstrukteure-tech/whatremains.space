@@ -370,12 +370,14 @@ function renderArchivePage() {
 <div class="actions">
   <button class="btn btn-primary" id="saveEntryBtn" type="button">Zwischenspeichern</button>
   <button class="btn btn-primary" id="detachEditorBtn" type="button">Abdocken</button>
-  <button class="btn btn-primary" id="audioStartBtn" type="button" title="Audio starten">●</button>
-  <button class="btn btn-primary" id="audioPauseBtn" type="button" title="Audio pausieren" hidden>⏸</button>
-  <button class="btn btn-primary" id="audioStopBtn" type="button" title="Audio beenden" hidden>■</button>
+
+  <button class="btn btn-audio-record" id="audioStartBtn" type="button" title="Audio starten">●</button>
+  <button class="btn btn-audio" id="audioPauseBtn" type="button" title="Pause" hidden>⏸</button>
+  <button class="btn btn-audio" id="audioStopBtn" type="button" title="Stop" hidden>■</button>
 </div>
 
-<div id="audioPreview" style="margin-top:14px;"></div>
+<div id="audioStatus" style="margin-top:10px; font-size:0.85rem; color:var(--muted);"></div>
+<div id="audioPreview" style="margin-top:10px;"></div>
         </article>
 
         <aside class="archive-card">
@@ -406,7 +408,7 @@ const closeDetached = document.getElementById('closeDetachedEditor');
 const audioPauseBtn = document.getElementById("audioPauseBtn");
 const audioStopBtn = document.getElementById("audioStopBtn");
 const audioPreview = document.getElementById("audioPreview");
-
+const audioStatus = document.getElementById("audioStatus");
 let audioRecorder = null;
 let audioChunks = [];
 let audioStream = null;
@@ -448,11 +450,11 @@ if (audioStartBtn && audioPauseBtn && audioStopBtn && audioPreview) {
         const audioBlob = new Blob(audioChunks, { type: "audio/webm" });
         const audioUrl = URL.createObjectURL(audioBlob);
 
-        audioPreview.innerHTML = `
-          <audio controls src="${audioUrl}" style="width:100%; margin-top:8px;"></audio>
-          <p class="archive-copy" style="margin-top:8px;">Audio bereit.</p>
-        `;
+        audioStatus.textContent = "Audio gespeichert";
 
+audioPreview.innerHTML = `
+  <audio controls src="${audioUrl}" style="width:100%; margin-top:6px;"></audio>
+`;
         if (audioStream) {
           audioStream.getTracks().forEach((track) => track.stop());
           audioStream = null;
@@ -465,7 +467,8 @@ if (audioStartBtn && audioPauseBtn && audioStopBtn && audioPreview) {
       });
 
       audioRecorder.start();
-
+audioStatus.textContent = "Audio läuft …";
+audioPreview.innerHTML = "";
       audioStartBtn.hidden = true;
       audioPauseBtn.hidden = false;
       audioStopBtn.hidden = false;
@@ -478,29 +481,27 @@ if (audioStartBtn && audioPauseBtn && audioStopBtn && audioPreview) {
   });
 
   audioPauseBtn.addEventListener("click", () => {
-    if (!audioRecorder) return;
+  if (!audioRecorder) return;
 
-    if (audioRecorder.state === "recording") {
-      audioRecorder.pause();
-      audioPauseBtn.textContent = "Audio fortsetzen";
-      audioPreview.innerHTML = `<p class="archive-copy">Audio pausiert.</p>`;
-      return;
-    }
+  if (audioRecorder.state === "recording") {
+    audioRecorder.pause();
+    audioPauseBtn.textContent = "▶";
+    audioStatus.textContent = "Audio pausiert";
+  } else if (audioRecorder.state === "paused") {
+    audioRecorder.resume();
+    audioPauseBtn.textContent = "⏸";
+    audioStatus.textContent = "Audio läuft …";
+  }
+});
 
-    if (audioRecorder.state === "paused") {
-      audioRecorder.resume();
-      audioPauseBtn.textContent = "Audio pausieren";
-      audioPreview.innerHTML = `<p class="archive-copy">Audio läuft ...</p>`;
-    }
-  });
+audioStopBtn.addEventListener("click", () => {
+  if (!audioRecorder) return;
 
-  audioStopBtn.addEventListener("click", () => {
-    if (!audioRecorder) return;
+  audioRecorder.stop();
 
-    if (audioRecorder.state !== "inactive") {
-      audioRecorder.stop();
-    }
-  });
+  audioPauseBtn.textContent = "⏸";
+  audioStatus.textContent = "Audio wird verarbeitet …";
+});
 
 }
   copyCodeBtn?.addEventListener("click", async () => {
