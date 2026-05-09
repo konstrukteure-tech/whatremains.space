@@ -52,7 +52,7 @@ function handleStartPage() {
   if (!form) return;
 
   form.addEventListener("submit", (event) => {
-    event.preventDefault();
+    event.preventDefault(); 
 
     const name = form.querySelector("[name='displayName']")?.value || "";
     const mode = form.querySelector("[name='mode']")?.value || "free";
