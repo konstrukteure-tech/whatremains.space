@@ -542,7 +542,7 @@ audioStopBtn.addEventListener("click", () => {
   audioRecorder.stop();
 
   audioPauseBtn.textContent = "⏸";
- audioStatus.textContent = "Audio beendet";
+ audioStatus.textContent = "";
 });
 
 }
