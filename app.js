@@ -509,7 +509,7 @@ audioPreview.innerHTML = `
         audioStartBtn.hidden = false;
         audioPauseBtn.hidden = true;
         audioStopBtn.hidden = true;
-        audioPaaudioPauseBtn.textContent = "⏸";
+        audioPauseBtn.textContent = "⏸";
       });
  
       audioRecorder.start();
