@@ -316,8 +316,8 @@ function renderArchivePage() {
 
      
       <div class="actions" style="margin-top:16px;">
-  <button class="btn btn-primary" id="saveAsChapterBtn" type="button">Als Kapitel speichern</button>
-  <button class="btn btn-primary" id="newChapterBtn" type="button">Neues Kapitel</button>
+  <button class="btn btn-primary" id="saveAsChapterBtn" type="button">Kapitel speichern</button>
+  <button class="btn btn-primary" id="newChapterBtn" type="button">Neu</button>
 </div>
 
  `;
