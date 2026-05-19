@@ -441,11 +441,36 @@ if (audioStartBtn && audioPauseBtn && audioStopBtn && audioPreview) {
         }
       });
 
-      audioRecorder.addEventListener("stop", () => {
+      audioRecorder.addEventListener("stop", async () => {
         const audioBlob = new Blob(audioChunks, { type: "audio/webm" });
-        const audioUrl = URL.createObjectURL(audioBlob);
+const localAudioUrl = URL.createObjectURL(audioBlob);
 
-audioStatus.textContent = "";
+audioStatus.textContent = "Audio wird gespeichert …";
+
+let uploadedAudioUrl = localAudioUrl;
+
+try {
+  const formData = new FormData();
+  formData.append("audio", audioBlob, "aufnahme.webm");
+  formData.append("archiveCode", data.archiveCode || "unknown");
+
+  const response = await fetch("http://localhost:3000/api/upload-audio", {
+    method: "POST",
+    body: formData
+  });
+
+  const result = await response.json();
+
+  if (result.ok && result.file?.path) {
+    uploadedAudioUrl = `http://localhost:3000${result.file.path}`;
+    audioStatus.textContent = "";
+  } else {
+    audioStatus.textContent = "Audio lokal bereit, Upload fehlgeschlagen.";
+  }
+} catch (error) {
+  console.error("Audio upload failed:", error);
+  audioStatus.textContent = "Audio lokal bereit, Backend nicht erreichbar.";
+}
 
 audioPreview.innerHTML = `
 <div style="
@@ -456,7 +481,7 @@ audioPreview.innerHTML = `
   width:fit-content;
 ">
 
-<audio controls src="${audioUrl}" style="
+<audio controls src="${uploadedAudioUrl}" style="
   width:260px;
   height:32px;
   display:block;
