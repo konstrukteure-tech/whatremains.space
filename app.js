@@ -452,7 +452,8 @@ let uploadedAudioUrl = localAudioUrl;
 try {
   const formData = new FormData();
   formData.append("audio", audioBlob, "aufnahme.webm");
-  formData.append("archiveCode", data.archiveCode || "unknown");
+  const currentArchive = getArchive();
+formData.append("archiveCode", currentArchive?.archiveCode || data?.archiveCode || "unknown");
 
   const response = await fetch("http://localhost:3000/api/upload-audio", {
     method: "POST",
